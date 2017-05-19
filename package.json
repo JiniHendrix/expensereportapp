@@ -1,0 +1,18 @@
+{
+  "name": "expense_report_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webpack.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.toptal.com:Jin-Choi/jin-choi.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
