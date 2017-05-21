@@ -6,7 +6,7 @@ import mainReducer from './reducers/reducers';
 import App from './components/App';
 
 
-{ render }.render(
+render(
   <Provider>
     <App />
   </Provider>,
