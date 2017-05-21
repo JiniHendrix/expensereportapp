@@ -1,9 +1,11 @@
 body {
   background-color:red;
 }
+
 #root {
   width:100%;
 }
+
 nav {
   height:50px;
   background-color:blue;
@@ -12,12 +14,15 @@ nav {
 nav ul {
   list-style: none;
 }
+
 nav li {
   display: inline;
 }
+
 nav a:hover {
   background-color:red;
 }
+
 nav a {
   padding-top:12.5px;
   padding-bottom:12.5px;
@@ -30,11 +35,35 @@ nav a {
   font-size: 25px;
   text-decoration: none;
 }
+
 #user {
   float:right;
 }
+
 .expenses {
   width: 500px;
   height: 700px;
+  margin:auto;
+  margin-top: 50px;
+}
+
+.expense {
+  width: 500px;
   background-color: white;
+  margin-bottom:10px;
+}
+.expense-left-col {
+  float:left;
+  padding-left: 20px;
+}
+
+.amount {
+  float:right;
+  padding-right:10px;
+}
+
+.comments {
+  width:480px;
+  padding:10px;
+  clear: both;
 }
