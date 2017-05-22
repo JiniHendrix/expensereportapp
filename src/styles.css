@@ -1,12 +1,9 @@
 body {
-  background-color:red;
+  padding-top:60px;
 }
 
-#root {
-  width:100%;
-}
 
-nav {
+/*nav {
   height:50px;
   background-color:blue;
 }
@@ -38,7 +35,7 @@ nav a {
 
 #user {
   float:right;
-}
+}*/
 
 .expenses {
   width: 500px;
@@ -51,6 +48,7 @@ nav a {
   width: 500px;
   background-color: white;
   margin-bottom:10px;
+  box-shadow: 3px 3px 3px grey, -3px -3px 3px grey;
 }
 .expense-left-col {
   float:left;
