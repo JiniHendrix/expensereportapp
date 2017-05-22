@@ -10,8 +10,8 @@ export default class App extends React.Component {
       <Router>
         <div>
           <Nav />
-          <Route path='/' component={Expenses} />
-          <Route path='new_expense' component={NewExpense} />
+          <Route path='/home' component={Expenses} />
+          <Route path='/new_expense' component={NewExpense} />
         </div>
       </Router>
     )
