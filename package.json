@@ -9,7 +9,8 @@
   "scripts": {
     "test": "./test/test.js",
     "dev": "webpack -w",
-    "start": "webpack"
+    "bundle": "webpack",
+    "start": "nodemon server/server.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "babel-loader": "^7.0.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "nodemon": "^1.11.0",
     "webpack": "^2.5.1"
   }
 }
