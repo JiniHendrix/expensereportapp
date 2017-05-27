@@ -1,15 +1,27 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+const userCntl = require('./Mongo/controllers');
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+
+app.post('/user', userCntl.addUser);
+
+app.post('/user/:username/expenses', userCntl.addExpense);
+app.patch('/user/:username/expenses/:expId', userCntl.updateExpense);
+app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
+
+
+app.get(/\/(|new_expense|home)$/, (req, res) => {
   fs.readFile(path.join(__dirname, '../src/index.html'), 'utf8', (err, html) => {
     res.set({'Content-Type': 'text/html'}).send(html);
-  })
-})
+  });
+});
 
 app.get(/.css/, (req, res) => {
   fs.readFile(path.join(__dirname, '../src/styles.css'), 'utf8', (err, css) => {
@@ -20,7 +32,7 @@ app.get(/.css/, (req, res) => {
 app.get(/\/build/, (req, res) => {
   fs.readFile(path.join(__dirname, '../build/bundle.js'), 'utf8', (err, build) => {
     res.set({'Content-Type': 'application/javascript'}).send(build);
-  })
-})
+  });
+});
 
 app.listen(port);
