@@ -2,53 +2,33 @@ body {
   padding-top:60px;
 }
 
-
-/*nav {
-  height:50px;
-  background-color:blue;
-}
-
-nav ul {
-  list-style: none;
-}
-
-nav li {
-  display: inline;
-}
-
-nav a:hover {
-  background-color:red;
-}
-
-nav a {
-  padding-top:12.5px;
-  padding-bottom:12.5px;
-  padding-right:10px;
-  padding-left:10px;
-  background-color:grey;
-  text-align: center;
-  line-height: 50px;
-  color: white;
-  font-size: 25px;
-  text-decoration: none;
-}
-
-#user {
-  float:right;
-}*/
-
 .expenses {
   width: 500px;
   height: 700px;
   margin:auto;
   margin-top: 50px;
 }
-
+@keyframes expense {
+  from {
+    top: 100px;
+    opacity: 0;
+  }
+  to {
+    top: 0px;
+    opacity: 1;
+  }
+}
+/*.expense-wrapper {
+  position: relative;
+}*/
 .expense {
+  position:relative;
   width: 500px;
   background-color: white;
   margin-bottom:10px;
   box-shadow: 3px 3px 3px grey, -3px -3px 3px grey;
+  animation-name: expense;
+  animation-duration:1s;
 }
 .expense-left-col {
   float:left;
@@ -63,5 +43,18 @@ nav a {
 .comments {
   width:480px;
   padding:10px;
+  clear: both;
+}
+
+.wrapper {
+  width: 500px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 3px solid grey;
+  border-radius: 3px;
+
+}
+hr {
   clear: both;
 }
