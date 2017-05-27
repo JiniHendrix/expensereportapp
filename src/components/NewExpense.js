@@ -7,11 +7,11 @@ const NewExpense = ({submitHandler}) => {
         <form onSubmit={submitHandler}>
           <div className='form-group'>
             <label for='date-input'>Date:</label>
-            <input type='date' className='form-control' id='date-input' placeholder='Date' />
+            <input type='date' className='form-control' id='date-input' placeholder='Date' required/>
           </div>
           <div className='form-group'>
             <label for='time-input'>Time:</label>
-            <input type='time' className='form-control' id='time-input' />
+            <input type='time' className='form-control' id='time-input' required/>
           </div>
           <div className='form-group'>
             <label for='amount-input'>Amount:</label>
