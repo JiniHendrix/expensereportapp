@@ -60,8 +60,7 @@ userCntl.updateExpense = (req, res) => {
   // }}, function(err) { ...
 }
 
-userCntl.deleteExpense = (req, res, next) => {
-  console.log(req.params);
+userCntl.deleteExpense = (req, res) => {
   Users.findOneAndUpdate({
     username: req.params.username,
   }, {

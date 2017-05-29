@@ -4,7 +4,9 @@ export const SET_SIGNEDUP_FLAG = 'SET_SIGNEDUP_FLAG';
 export const UNSET_SIGNEDUP_FLAG = 'UNSET_SIGNEDUP_FLAG';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const EDITING_EXPENSE = 'EDITING_EXPENSE';
-export const FINISH_EDITING_EXPENSE = 'FINISH_EDITING_EXPENSE';
+export const HANDLE_CHANGE = 'HANDLE_CHANGE';
+export const SET_DEFAULT_EXPENSE = 'SET_DEFAULT_EXPENSE';
+
 export const toggleLoading = () => {
   return {
     type: TOGGLE_LOADING
@@ -36,14 +38,15 @@ export const setLoggedIn = () => {
   }
 }
 
-export const editExpense = ({_id, amount, description, dateTime}) {
+export const editExpense = ({_id, amount, description, date, time}) => {
   return {
     type: EDITING_EXPENSE,
-    editExpenseDetails: {
+    expenseDetails: {
       _id,
       amount,
       description,
-      dateTime
+      date,
+      time
     }
   }
 }
@@ -51,5 +54,19 @@ export const editExpense = ({_id, amount, description, dateTime}) {
 export const finishEditingExpense = () => {
   return {
     type: FINISH_EDITING_EXPENSE
+  }
+}
+
+export const setDefaultExpense = () => {
+  return {
+    type: SET_DEFAULT_EXPENSE
+  }
+}
+
+export const handleChange = (name, value) => {
+  return {
+    type: HANDLE_CHANGE,
+    name,
+    value
   }
 }

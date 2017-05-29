@@ -1,9 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { editExpense } from '../actions';
 
-export default class Expense extends React.PureComponent {
+class Expense extends React.PureComponent {
   constructor() {
     super();
     this.delete = this.delete.bind(this);
+    this.edit = this.edit.bind(this);
   }
 
   edit() {
@@ -13,9 +16,11 @@ export default class Expense extends React.PureComponent {
       amount,
       description
     } = this.props;
+
     this.props.editExpense({
       _id,
-      dateTime,
+      date: dateTime.slice(0, 11),
+      time: dateTime.slice(11),
       amount,
       description
     });
@@ -24,7 +29,7 @@ export default class Expense extends React.PureComponent {
   delete() {
     const setUserDetails = this.props.setUserDetails;
     fetch(`/user/${this.props.username}/expenses/${this.props._id}`, {
-      method:'DELETE'
+      method: 'DELETE'
     })
       .then(res => {
         return res.json();
@@ -43,24 +48,36 @@ export default class Expense extends React.PureComponent {
     } = this.props;
 
     return (
-    <div className='expense container-fluid'>
-      <div className='expense-left-col'>
-        <p className='expense-date'>{dateTime}</p>
-        <p className='expense-desc'>{description}</p>
+      <div className='expense container-fluid'>
+        <div className='expense-left-col'>
+          <p className='expense-date'>{dateTime}</p>
+          <p className='expense-desc'>{description}</p>
+        </div>
+        <button className='btn' onClick={this.delete}>Delete</button>
+        <button className='btn' onClick={this.edit}>Edit</button>
+        <h1 className='amount'>{`\$${amount}`}</h1>
+        <hr />
+        <div className='comments'>
+          <div className='comment'>This SSD is awesome</div>
+          <form>
+            <div className='form-group'>
+              <input type='text' className='form-control' placeholder='Comment...'></input>
+            </div>
+          </form>
+        </div>
       </div>
-      <button className='btn' onClick={this.delete}>Delete</button>
-      <button className='btn'>Edit</button>
-      <h1 className='amount'>{`\$${amount}`}</h1>
-      <hr />
-      <div className='comments'>
-        <div className='comment'>This SSD is awesome</div>
-        <form>
-          <div className='form-group'>
-            <input type='text' className='form-control' placeholder='Comment...'></input>
-          </div>
-        </form>
-      </div>
-    </div>
-  )
+    )
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    editExpense: (expenseDetails) => {
+      dispatch(editExpense(expenseDetails))
+    }
+  }
+}
+
+const ContainerExpense = connect(() => { }, mapDispatchToProps)(Expense);
+
+export default ContainerExpense;

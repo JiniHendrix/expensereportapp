@@ -6,15 +6,27 @@ import {
   UNSET_SIGNEDUP_FLAG,
   SET_LOGGED_IN,
   EDITING_EXPENSE,
-  FINISH_EDITING_EXPENSE
+  HANDLE_CHANGE,
+  SET_DEFAULT_EXPENSE
 } from '../actions';
+
 
 const initialState = {
   userDetails: { username: '' },
   filter: 'NONE',
   isLoading: false,
-  isLoggedIn: false
+  isLoggedIn: false,
+  isEditing: false,
+  expenseDetails: {
+    date: '',
+    time: '',
+    amount: 0,
+    description: '',
+    _id: ''
+  }
 }
+
+
 
 
 const reducer = (state = initialState, action) => {
@@ -35,12 +47,25 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { isLoggedIn: true });
 
     case EDITING_EXPENSE:
-      return Object.assign({}, state, { editExpenseDetails: action.editExpenseDetails });
-    
-    case FINISH_EDITING_EXPENSE:
-      return Object.assign({}, state, {editExpenseDetails: null});
+      return Object.assign({}, state, { expenseDetails: action.expenseDetails, isEditing: true });
 
-    case 
+    case SET_DEFAULT_EXPENSE:
+      return Object.assign({}, state, {
+        isEditing: false,
+        expenseDetails: {
+          date: '',
+          time: '',
+          amount: 0,
+          description: '',
+          _id: ''
+        }
+      });
+
+    case HANDLE_CHANGE:
+      const expenseCopy = { expenseDetails: { ...state.expenseDetails } };
+      expenseCopy.expenseDetails[action.name] = action.value;
+      return Object.assign({}, state, expenseCopy);
+
     default: return state;
   }
 }

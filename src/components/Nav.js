@@ -8,10 +8,10 @@ export default class Nav extends React.PureComponent {
         <div className='container-fluid'>
           <ul className='nav navbar-nav'>
             <li>
-              <Link to='/home'>Home</Link>
+              <Link to='/home' onClick={this.props.setDefaultExpense}>Home</Link>
             </li>
             <li>
-              <Link to='/new_expense'>New Expense</Link>
+              <Link to='/new_expense' onClick={this.props.setDefaultExpense}>New Expense</Link>
             </li>
           </ul>
           <ul className='nav navbar-nav navbar-right'>

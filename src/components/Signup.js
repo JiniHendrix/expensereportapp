@@ -33,8 +33,8 @@ export default class Signup extends React.PureComponent {
   render() {
     return !this.props.signedUp ? (  
       <div className='login-signup'>
-        <div className='container'>
-          <form onSubmit={this.signup}>
+        <div className='container-fluid'>
+          <form onSubmit={this.signup.bind(this)}>
             <div className='form-group'>
               <label for='username-input'>Username:</label>
               <input type='text' className='form-control' id='username-input' required />
