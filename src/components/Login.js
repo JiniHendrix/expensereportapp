@@ -1,26 +1,44 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
-
-const history = createHistory();
+import { Link, Redirect } from 'react-router-dom';
 
 export default class Login extends React.PureComponent {
-  login() {
+  constructor() {
+    super();
+    this.login = this.login.bind(this);
+  }
+  componentWillMount(props) {
+    this.props.unsetSignedUpFlag();
+  }
+
+  login(e) {
+    e.preventDefault();
+
+    const {setLoggedIn, setUserDetails} = this.props;
+    const username = document.getElementById('username-input').value;
+    const password = document.getElementById('password-input').value;
+
     fetch(`/login/${username}/${password}`)
       .then((res) => {
         if (res.status === 401) {
           console.log('wrong username/password');
         }
         else {
-          //isloggedin
+          return res.json();
+        }
+      })
+      .then((res) => {
+        if (res) {
+          setUserDetails(res);
+          setLoggedIn();
         }
       })
   }
+
   render() {
-    return (
+    return !this.props.isLoggedIn ? (
       <div className='login-signup'>
-        <div className='container'>
-          <form>
+        <div className='container-fluid'>
+          <form onSubmit={this.login}>
             <div className='form-group'>
               <label for='username-input'>Username:</label>
               <input type='text' className='form-control' id='username-input' required />
@@ -34,6 +52,6 @@ export default class Login extends React.PureComponent {
           </form>
         </div>
       </div>
-    )
+    ) : <Redirect to='/home' />
   }
 }

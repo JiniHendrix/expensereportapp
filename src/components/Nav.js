@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default class Nav extends React.PureComponent {
   render() {
-    return (
+    return this.props.isLoggedIn ? (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className='container-fluid'>
           <ul className='nav navbar-nav'>
@@ -21,6 +21,6 @@ export default class Nav extends React.PureComponent {
           </ul>
         </div>
       </nav>
-    )
+    ) : null;
   }
 }

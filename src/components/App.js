@@ -1,10 +1,19 @@
 import React from 'react';
 import Expenses from './Expenses';
 import Nav from './Nav';
-import NewExpense from './NewExpense';
-import { toggleLoading, setUserDetails } from '../actions';
+import ExpenseForm from './ExpenseForm';
+import Login from './Login';
+import Signup from './Signup';
+import { 
+  toggleLoading, 
+  setUserDetails, 
+  toggleSignupSuccessful, 
+  setLoggedIn, 
+  setSignedUpFlag, 
+  unsetSignedUpFlag 
+} from '../actions';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
   constructor() {
@@ -12,10 +21,6 @@ class App extends React.Component {
 
     this.submitHandler = this.submitHandler.bind(this);
     this.getUserDetails = this.getUserDetails.bind(this);
-  }
-
-  componentDidMount() {
-    this.getUserDetails();
   }
 
   getUserDetails() {
@@ -54,7 +59,7 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then((res) => {
+      .then(res => {
         return res.json();
       })
       .then(res => {
@@ -62,31 +67,47 @@ class App extends React.Component {
         toggleLoading();
       })
   }
+
   render() {
     return (
       <div>
-        <Nav username={this.props.userDetails.username} />
-        <Route path='/home' component={() => { return <Expenses expenses={this.props.userDetails.expenses} /> }} />
-        <Route path='/new_expense' component={() => { return <NewExpense submitHandler={this.submitHandler} /> }} />
+        <Nav username={this.props.userDetails.username} isLoggedIn={this.props.isLoggedIn}/>
+        <Route exact path='/' component={() => {return <Login unsetSignedUpFlag={this.props.unsetSignedUpFlag} setUserDetails={this.props.setUserDetails} isLoggedIn={this.props.isLoggedIn} setLoggedIn={this.props.setLoggedIn}/>}} />
+        <Route path='/signup' component={() => {return <Signup signedUp={this.props.signedUp} setSignedUpFlag={this.props.setSignedUpFlag}/>}} />
+        <Route path='/home' render={() => { return this.props.isLoggedIn ? <Expenses expenses={this.props.userDetails.expenses} username={this.props.userDetails.username} setUserDetails={this.props.setUserDetails}/> : <Redirect to='/'/> }} />
+        <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm submitHandler={this.submitHandler} /> : <Redirect to='/'/> }} />
+        <Route path='/edit_expense' render={() => {return <ExpenseForm submitHandler={this.editHandler} expenseDetails={this.props.expenseDetails}/>}} />
       </div>
     )
   }
 }
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
   return {
     toggleLoading: (e) => {
       dispatch(toggleLoading());
     },
     setUserDetails: (userDetails) => {
       dispatch(setUserDetails(userDetails));
+    },
+    setSignedUpFlag: () => {
+      dispatch(setSignedUpFlag());
+    },
+    unsetSignedUpFlag: () => {
+      dispatch(unsetSignedUpFlag());
+    },
+    setLoggedIn: () => {
+      dispatch(setLoggedIn());
     }
+  
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    userDetails: state.userDetails
+    userDetails: state.userDetails,
+    isLoggedIn: state.isLoggedIn,
+    signedUp: state.signedUp
   }
 }
 

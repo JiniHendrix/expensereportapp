@@ -1,8 +1,5 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
-
-const history = createHistory();
 
 export default class Signup extends React.PureComponent {
   signup(e) {
@@ -11,6 +8,7 @@ export default class Signup extends React.PureComponent {
     const username = document.getElementById('username-input').value;
     const password = document.getElementById('password-input').value;
     const type = document.getElementById('permission-input').value;
+    const {setSignedUpFlag} = this.props;
 
     fetch('/user', {
       method: 'POST',
@@ -28,13 +26,12 @@ export default class Signup extends React.PureComponent {
           console.log('username exists');
         }
         else {
-          history.push('/');
-          history.go(0);
+          setSignedUpFlag();
         }
       })
   }
   render() {
-    return (  
+    return !this.props.signedUp ? (  
       <div className='login-signup'>
         <div className='container'>
           <form onSubmit={this.signup}>
@@ -59,6 +56,6 @@ export default class Signup extends React.PureComponent {
           </form>
         </div>
       </div>
-    ) 
+    ) : <Redirect to='/' />
   }
 }
