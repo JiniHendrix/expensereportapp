@@ -7,10 +7,13 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded());
+// app.use(bodyParser());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/user', userCntl.addUser);
+
+app.get('/user/:username', userCntl.getUser);
 
 app.post('/user/:username/expenses', userCntl.addExpense);
 app.patch('/user/:username/expenses/:expId', userCntl.updateExpense);

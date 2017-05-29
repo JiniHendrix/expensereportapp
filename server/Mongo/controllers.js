@@ -3,17 +3,18 @@ const Users = require('./models');
 
 const userCntl = {};
 
+userCntl.getUser = (req, res) => {
+  Users.findOne({ username: req.params.username }, {fields: '-password'}, (err, user) => {
+    if (err) return res.send(err);
+    res.send(user);
+  })
+}
+
 userCntl.addUser = (req, res) => {
-  //get username and password from body
-  console.log(req.body);
   Users.create(req.body, (err, doc) => {
     if (err) return res.send(err);
     res.send(doc);
-  })
-  //look for username in DB
-  //if exists return error or something saying user already exits
-  //otherwise create new user and reroute to sign in page
-  // Users.find()
+  });
 }
 
 userCntl.editUser = (req, res) => {
@@ -25,27 +26,27 @@ userCntl.deleteUser = (req, res) => {
 }
 
 userCntl.addExpense = (req, res) => {
-  //get info from body
-  console.log(req.body, req.params.username);
-  //use findOneAndUpdate
-  //return whether it was successful or not
+  Users.findOneAndUpdate({ username: req.params.username },
+    { $push: { expenses: req.body } },
+    { new: true, fields: '-password' },
+    (err, result) => {
+      if (err) return res.send(err);
+      res.send(result);
+    });
 }
 
 userCntl.updateExpense = (req, res) => {
   //get info from body
   //use Update Person.update({'items.id': 2}, {'$set': {
-//     'items.$.name': 'updated item2',
-//     'items.$.value': 'two updated'
-// }}, function(err) { ...
+  //     'items.$.name': 'updated item2',
+  //     'items.$.value': 'two updated'
+  // }}, function(err) { ...
 }
 
 userCntl.deleteExpense = (req, res) => {
   //delete using expense id
 }
 
-userCntl.getUser = (req, res) => {
-  //use findOneAndUpdate to get all user info from one user
-}
 
 userCntl.getAllUsers = (req, res) => {
   //use find to get all user info from all users
