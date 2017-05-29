@@ -1,4 +1,8 @@
 export const TOGGLE_LOADING = 'TOGGLE_LOADING';
+export const SET_USER_DETAILS = 'SET_USER_DETAILS';
+
+
+
 
 export const toggleLoading = () => {
   return {
@@ -6,7 +10,9 @@ export const toggleLoading = () => {
   }
 }
 
-
-// export const submitExpense = (expense) => {
-
-// }
+export const setUserDetails = (userDetails) => {
+  return {
+    type: SET_USER_DETAILS,
+    userDetails
+  }
+}
