@@ -1,11 +1,43 @@
 import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 
-export default class Login extends React.PureComponent {
+const history = createHistory();
+
+export default class Signup extends React.PureComponent {
+  signup(e) {
+    e.preventDefault();
+
+    const username = document.getElementById('username-input').value;
+    const password = document.getElementById('password-input').value;
+    const type = document.getElementById('permission-input').value;
+
+    fetch('/user', {
+      method: 'POST',
+      body: JSON.stringify({
+        username,
+        password,
+        type
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then((res) => {
+        if (res.status === 401) {
+          console.log('username exists');
+        }
+        else {
+          history.push('/');
+          history.go(0);
+        }
+      })
+  }
   render() {
-    return (
+    return (  
       <div className='login-signup'>
         <div className='container'>
-          <form onSubmit={}>
+          <form onSubmit={this.signup}>
             <div className='form-group'>
               <label for='username-input'>Username:</label>
               <input type='text' className='form-control' id='username-input' required />
@@ -22,10 +54,11 @@ export default class Login extends React.PureComponent {
                 <option>Admin</option>
               </select>
             </div>
+            <Link className='link' to='/'>Login Page</Link>
             <input type="submit" className="btn btn-info" value="Submit Button" />
           </form>
         </div>
       </div>
-    )
+    ) 
   }
 }
