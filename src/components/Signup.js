@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Signup = () => {
-  return (
-    <div>
-    </div>
-  )
+export default class Login extends React.PureComponent {
+  render() {
+    return (
+      <div>
+      </div>
+    )
+  }
 }
-
-export default Signup;
