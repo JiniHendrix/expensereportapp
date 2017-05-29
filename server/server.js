@@ -20,7 +20,7 @@ app.patch('/user/:username/expenses/:expId', userCntl.updateExpense);
 app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
 
 
-app.get(/\/(|new_expense|home)$/, (req, res) => {
+app.get(/\/(|new_expense|home|login|signup)$/, (req, res) => {
   fs.readFile(path.join(__dirname, '../src/index.html'), 'utf8', (err, html) => {
     res.set({'Content-Type': 'text/html'}).send(html);
   });

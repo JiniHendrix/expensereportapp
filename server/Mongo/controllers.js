@@ -11,8 +11,9 @@ userCntl.getUser = (req, res) => {
 }
 
 userCntl.addUser = (req, res) => {
-  Users.create(req.body, (err, doc) => {
+  Users.findOneAndUpdate({username: req.body.username}, {$setOnInsert: req.body}, {upsert: true, new: true}, (err, doc) => {
     if (err) return res.send(err);
+    console.log(doc);
     res.send(doc);
   });
 }
