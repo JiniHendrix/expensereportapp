@@ -3,6 +3,14 @@ const Users = require('./models');
 
 const userCntl = {};
 
+userCntl.authenticate = (req, res) => {
+  Users.findOne(req.params, (err, user) => {
+    if (err) return res.send(err);
+    if (!user) return res.status(401).send();
+    return res.send('success');
+  })
+}
+
 userCntl.getUser = (req, res) => {
   Users.findOne({ username: req.params.username }, {fields: '-password'}, (err, user) => {
     if (err) return res.send(err);
@@ -11,10 +19,11 @@ userCntl.getUser = (req, res) => {
 }
 
 userCntl.addUser = (req, res) => {
-  Users.findOneAndUpdate({username: req.body.username}, {$setOnInsert: req.body}, {upsert: true, new: true}, (err, doc) => {
+  Users.findOneAndUpdate({username: req.body.username}, {$setOnInsert: req.body}, {upsert: true, new: false, fields: '-password'}, (err, doc) => {
     if (err) return res.send(err);
-    console.log(doc);
-    res.send(doc);
+    //doc exists only if username is found and no upsert happened thanks to new: false
+    if (doc) return res.status(401).send();
+    return res.send();
   });
 }
 
