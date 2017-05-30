@@ -7,6 +7,7 @@ class Expense extends React.PureComponent {
     super();
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
+    this.comment = this.comment.bind(this);
   }
 
   edit() {
@@ -39,6 +40,28 @@ class Expense extends React.PureComponent {
       })
   }
 
+  comment(e) {
+    e.preventDefault();
+    const comment = document.getElementById(this.props._id).value;
+    console.log('comment:',comment)
+    fetch(`/user/${this.props.username}/expenses/${this.props._id}`, {
+      method:'POST',
+      body: JSON.stringify({
+        comment
+      }),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        console.log(res);
+        this.props.setUserDetails(res);
+      });
+    document.getElementById(this.props._id).value = '';
+  }
   render() {
     const {
       dateTime,
@@ -46,6 +69,10 @@ class Expense extends React.PureComponent {
       description,
       comments
     } = this.props;
+
+    const commArr = comments.map((elem, i) => {
+      return <li key={i}>{elem.comment}</li>
+    });
 
     return (
       <div className='expense container-fluid'>
@@ -58,10 +85,12 @@ class Expense extends React.PureComponent {
         <h1 className='amount'>{`\$${amount}`}</h1>
         <hr />
         <div className='comments'>
-          <div className='comment'>This SSD is awesome</div>
-          <form>
+          <ul>
+            {commArr}
+          </ul>
+          <form onSubmit={this.comment} >
             <div className='form-group'>
-              <input type='text' className='form-control' placeholder='Comment...'></input>
+              <input type='text' id={this.props._id} className='form-control' placeholder='Comment...'></input>
             </div>
           </form>
         </div>

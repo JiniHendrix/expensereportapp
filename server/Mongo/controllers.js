@@ -42,7 +42,7 @@ userCntl.deleteUser = (req, res) => {
 userCntl.addExpense = (req, res) => {
   // req.body.$sort = {amount : -1};
   Users.findOneAndUpdate({ username: req.params.username },
-    { $push: { expenses: {$each: [req.body], $sort:{dateTime: -1}}} },
+    { $push: { expenses: { $each: [req.body], $sort: { dateTime: -1 } } } },
     { new: true }).select('-password')
     .exec((err, result) => {
       if (err) return res.send(err);
@@ -84,6 +84,29 @@ userCntl.deleteExpense = (req, res) => {
     })
 }
 
+userCntl.addComment = (req, res) => {
+  console.log(req.body, req.params);
+  Users.findOneAndUpdate({
+    username: req.params.username,
+    'expenses._id': req.params.expId
+  },
+    { $push: { 'expenses.$.comments': req.body } },
+    { new: true }).select('-password')
+    .exec((err, result) => {
+      if (err) return res.send(err);
+      res.send(result);
+    });
+}
+
+// userCntl.deleteComment = (req, res) => {
+//   Users.findOneAndUpdate({ username: req.params.username, 'expenses._id': req.params.expId },
+//     { $push: { 'expenses.comments': req.body}},
+//     { new: true }).select('-password')
+//     .exec((err, result) => {
+//       if (err) return res.send(err);
+//       res.send(result);
+//     });
+// }
 
 userCntl.getAllUsers = (req, res) => {
   //use find to get all user info from all users

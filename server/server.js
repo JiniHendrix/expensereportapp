@@ -17,6 +17,7 @@ app.get('/user/:username', userCntl.getUser);
 
 app.post('/user/:username/expenses', userCntl.addExpense);
 app.patch('/user/:username/expenses/:expId', userCntl.updateExpense);
+app.post('/user/:username/expenses/:expId', userCntl.addComment);
 app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
 
 
