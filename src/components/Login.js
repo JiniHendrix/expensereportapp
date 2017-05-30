@@ -20,7 +20,6 @@ export default class Login extends React.PureComponent {
     fetch(`/login/${username}/${password}`)
       .then((res) => {
         if (res.status === 401) {
-          console.log('wrong username/password');
           document.querySelector('.login-signup').style.borderColor = 'red';
         }
         else {

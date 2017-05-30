@@ -7,7 +7,7 @@ export default class Nav extends React.PureComponent {
 
     let nav;
 
-    if (this.props.userDetails.type === 'User') {
+    if (this.props.userDetails.userType === 'User') {
       nav = (
         <ul className='nav navbar-nav'>
           <li>
@@ -19,7 +19,7 @@ export default class Nav extends React.PureComponent {
         </ul>
       )
     }
-    else if (this.props.userDetails.type === 'User Manager') {
+    else if (this.props.userDetails.userType === 'User Manager') {
       nav = (
         <ul className='nav navbar-nav'>
           <li>

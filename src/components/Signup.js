@@ -7,7 +7,7 @@ export default class Signup extends React.PureComponent {
 
     const username = document.getElementById('username-input').value;
     const password = document.getElementById('password-input').value;
-    const type = document.getElementById('permission-input').value;
+    const userType = document.getElementById('permission-input').value;
     const {setSignedUpFlag} = this.props;
 
     fetch('/user', {
@@ -15,7 +15,7 @@ export default class Signup extends React.PureComponent {
       body: JSON.stringify({
         username,
         password,
-        type
+        userType
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export default class Signup extends React.PureComponent {
     })
       .then((res) => {
         if (res.status === 401) {
-          console.log('username exists');
+          document.querySelector('.login-signup').style.borderColor = 'red';
         }
         else {
           setSignedUpFlag();

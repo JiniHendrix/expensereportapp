@@ -46,12 +46,12 @@ class App extends React.Component {
         <Route path='/home' render={() => {
           return !this.props.isLoggedIn ?
             <Redirect to='/' /> :
-            this.props.userDetails.type = 'User' ? <Expenses isEditing={this.props.isEditing} expenses={this.props.userDetails.expenses} username={this.props.userDetails.username} setUserDetails={this.props.setUserDetails} /> :
-              this.props.userDetails.type = 'User Manager' ? <Users usersList={this.props.usersList}  /> :
+            this.props.userDetails.userType = 'User' ? <Expenses isEditing={this.props.isEditing} expenses={this.props.userDetails.expenses} username={this.props.userDetails.username} setUserDetails={this.props.setUserDetails} /> :
+              this.props.userDetails.userType = 'User Manager' ? <Users usersList={this.props.usersList}  /> :
                 null
         }} />
         <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm type='new' /> : <Redirect to='/' /> }} />
-        <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' expenseDetails={this.props.expenseDetails} /> }} />
+        <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' /> }} />
       </div>
     )
   }

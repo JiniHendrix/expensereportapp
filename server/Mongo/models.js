@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/test');
 const userSchema = new Schema({
   username: String,
   password: String,
-  type: String,
+  userType: String,
   expenses: [{
     dateTime: Date,
     amount: Number,
