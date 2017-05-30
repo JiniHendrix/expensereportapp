@@ -6,19 +6,18 @@ export default class User extends React.PureComponent {
     const {
       username,
       password,
-      type
+      userType
     } = this.props.user;
 
     return (
       <div className='expense container-fluid'>
         <div className='user-pass'>
-          <p>{username}</p>
-          <p>{password}</p>
+          <p>username: {username}</p>
+          <p>password: {password}</p>
         </div>
         <div className='buttons-type'>
-          <button className='btn'>Edit</button>
           <button className='btn'>Delete</button>
-          <h1>{type}</h1>
+          <button className='btn'>Edit</button>
         </div>
       </div>
     )

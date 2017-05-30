@@ -18,7 +18,7 @@ export default class Login extends React.PureComponent {
     const password = document.getElementById('password-input').value;
 
     fetch(`/login/${username}/${password}`)
-      .then((res) => {
+      .then(res => {
         if (res.status === 401) {
           document.querySelector('.login-signup').style.borderColor = 'red';
         }
@@ -26,10 +26,11 @@ export default class Login extends React.PureComponent {
           return res.json();
         }
       })
-      .then((res) => {
+      .then(res => {
         if (res) {
+          console.log(res.user)
           setUserDetails(res.user);
-          setUsersList(res.usersList)
+          setUsersList(res.usersList);
           setLoggedIn();
         }
       })

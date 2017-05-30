@@ -4,11 +4,9 @@ import User from './User';
 export default class Users extends React.PureComponent {
 
   render() {
-    // console.log(this.props)
-    const users = this.props.usersList.map((user) => {
-      <User user={user} />
+    const users = this.props.usersList.map((user, i) => {
+      return <User key={i} user={user} />
     });
-    console.log('users:', users)
 
     return (
       <div className='expenses'>

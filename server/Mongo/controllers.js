@@ -14,7 +14,7 @@ userCntl.authenticate = (req, res) => {
       if (user.type === 'User') return res.send({ user });
 
       else {
-        Users.find({ type: 'User' },
+        Users.find({ userType: 'User' },
           (err, usersList) => {
             if (err) return res.send(err);
             return res.send({
