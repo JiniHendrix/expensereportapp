@@ -40,8 +40,9 @@ userCntl.deleteUser = (req, res) => {
 }
 
 userCntl.addExpense = (req, res) => {
+  // req.body.$sort = {amount : -1};
   Users.findOneAndUpdate({ username: req.params.username },
-    { $push: { expenses: req.body } },
+    { $push: { expenses: {$each: [req.body], $sort:{dateTime: -1}}} },
     { new: true }).select('-password')
     .exec((err, result) => {
       if (err) return res.send(err);
@@ -59,8 +60,8 @@ userCntl.updateExpense = (req, res) => {
         "expenses.$.description": req.body.description,
         "expenses.$.dateTime": req.body.dateTime
       }
-    }, { new: true },
-    (err, result) => {
+    }, { new: true }).select('-password')
+    .exec((err, result) => {
       console.log(result)
       if (err) return res.send(err);
       res.send(result);
