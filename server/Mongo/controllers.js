@@ -8,8 +8,21 @@ userCntl.authenticate = (req, res) => {
     .select('-password')
     .exec((err, user) => {
       if (err) return res.send(err);
+
       if (!user) return res.status(401).send();
-      return res.send(user);
+
+      if (user.type === 'User') return res.send({ user });
+
+      else {
+        Users.find({ type: 'User' },
+          (err, usersList) => {
+            if (err) return res.send(err);
+            return res.send({
+              user,
+              usersList
+            })
+          })
+      }
     })
 }
 
@@ -85,7 +98,6 @@ userCntl.deleteExpense = (req, res) => {
 }
 
 userCntl.addComment = (req, res) => {
-  console.log(req.body, req.params);
   Users.findOneAndUpdate({
     username: req.params.username,
     'expenses._id': req.params.expId
@@ -109,9 +121,10 @@ userCntl.addComment = (req, res) => {
 // }
 
 userCntl.getAllUsers = (req, res) => {
-  //use find to get all user info from all users
-  //maybe use cookies to determine whether it's a use manager or admin
-  //and only get usernames and passwords if its a user manager, and all info if admin
+  Users.find({ type: 'User' }, (err, users) => {
+    if (err) res.send(err);
+    res.send(users);
+  })
 }
 
 module.exports = userCntl;
