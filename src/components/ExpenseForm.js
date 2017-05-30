@@ -3,6 +3,7 @@ import {
   toggleLoading,
   setUserDetails,
   handleChange,
+  setDefaultExpense
 } from '../actions';
 import { connect } from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -15,13 +16,13 @@ class ExpenseForm extends React.PureComponent {
 
   submitHandler(e) {
     const username = this.props.userDetails.username;
-    const {toggleLoading, setUserDetails} = this.props;
+    const {toggleLoading, setUserDetails, setDefaultExpense} = this.props;
     const date = document.getElementById('date').value;
     const time = document.getElementById('time').value;
     const amount = document.getElementById('amount').value;
     const description = document.getElementById('description').value || '';
     const dateTime = new Date(date + 'T' + time);
-    console.log(this.props.type)
+    const id = this.props.expenseDetails._id;
     e.preventDefault();
 
     toggleLoading();
@@ -48,7 +49,7 @@ class ExpenseForm extends React.PureComponent {
     }
 
     if (this.props.type === 'edit') {
-      fetch(`/user/${username}/expenses`, {
+      fetch(`/user/${username}/expenses/${id}`, {
         method: 'PATCH',
         body: JSON.stringify({
           dateTime,
@@ -67,6 +68,7 @@ class ExpenseForm extends React.PureComponent {
           toggleLoading();
         })
     }
+    setDefaultExpense();
   }
 
   render() {

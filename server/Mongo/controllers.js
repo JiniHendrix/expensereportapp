@@ -4,11 +4,9 @@ const Users = require('./models');
 const userCntl = {};
 
 userCntl.authenticate = (req, res) => {
-  console.log(req.params);
   Users.findOne(req.params)
     .select('-password')
     .exec((err, user) => {
-      console.log(user);
       if (err) return res.send(err);
       if (!user) return res.status(401).send();
       return res.send(user);
@@ -16,7 +14,6 @@ userCntl.authenticate = (req, res) => {
 }
 
 userCntl.getUser = (req, res) => {
-  console.log('HELLO');
   Users.findOne({ username: req.params.username }).select('-password').exec((err, user) => {
     if (err) return res.send(err);
     res.send(user);
@@ -53,11 +50,21 @@ userCntl.addExpense = (req, res) => {
 }
 
 userCntl.updateExpense = (req, res) => {
-  //get info from body
-  //use Update Person.update({'items.id': 2}, {'$set': {
-  //     'items.$.name': 'updated item2',
-  //     'items.$.value': 'two updated'
-  // }}, function(err) { ...
+  Users.findOneAndUpdate({
+    username: req.params.username,
+    "expenses._id": req.params.expId
+  }, {
+      $set: {
+        "expenses.$.amount": req.body.amount,
+        "expenses.$.description": req.body.description,
+        "expenses.$.dateTime": req.body.dateTime
+      }
+    }, { new: true },
+    (err, result) => {
+      console.log(result)
+      if (err) return res.send(err);
+      res.send(result);
+    })
 }
 
 userCntl.deleteExpense = (req, res) => {
@@ -69,7 +76,7 @@ userCntl.deleteExpense = (req, res) => {
           _id: req.params.expId
         }
       }
-    }, { new: true }, 
+    }, { new: true },
     (err, result) => {
       if (err) return res.send(err);
       res.send(result);

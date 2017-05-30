@@ -19,8 +19,8 @@ class Expense extends React.PureComponent {
 
     this.props.editExpense({
       _id,
-      date: dateTime.slice(0, 11),
-      time: dateTime.slice(11),
+      date: dateTime.slice(0, 10),
+      time: dateTime.slice(11, 16),
       amount,
       description
     });
@@ -78,6 +78,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ContainerExpense = connect(() => { }, mapDispatchToProps)(Expense);
+const ContainerExpense = connect(() => {return {}}, mapDispatchToProps)(Expense);
 
 export default ContainerExpense;
