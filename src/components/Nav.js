@@ -26,7 +26,7 @@ export default class Nav extends React.PureComponent {
             <Link to='/home'>Home</Link>
           </li>
           <li>
-            <Link to='/new_user'>New User</Link>
+            <Link to='/add_user'>Add User</Link>
           </li>
         </ul>
       )

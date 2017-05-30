@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.get('/login/:username/:password', userCntl.authenticate);
 
-app.post('/user', userCntl.addUser);
+app.post('/user', userCntl.signup);
 app.get('/user/:username', userCntl.getUser);
 
 app.post('/user/:username/expenses', userCntl.addExpense);
@@ -21,6 +21,8 @@ app.post('/user/:username/expenses/:expId', userCntl.addComment);
 app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
 
 app.get('/usermanager', userCntl.getAllUsers);
+app.post('/usermanager', userCntl.addUser, userCntl.getAllUsers);
+app.delete('/usermanager/:username', userCntl.deleteUser, userCntl.getAllUsers);
 
 app.get(/\/(|new_expense|home|login|signup|edit_expense)$/, (req, res) => {
   fs.readFile(path.join(__dirname, '../src/index.html'), 'utf8', (err, html) => {

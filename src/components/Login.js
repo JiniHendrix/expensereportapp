@@ -28,7 +28,6 @@ export default class Login extends React.PureComponent {
       })
       .then(res => {
         if (res) {
-          console.log(res.user)
           setUserDetails(res.user);
           setUsersList(res.usersList);
           setLoggedIn();
@@ -50,7 +49,7 @@ export default class Login extends React.PureComponent {
               <input type='password' className='form-control' id='password-input' required />
             </div>
             <Link className='link' to='/signup'>Signup Now</Link>
-            <input type="submit" className="btn btn-info" value="Submit Button" />
+            <input type="submit" className="btn btn-info" value="Submit" />
           </form>
         </div>
       </div>

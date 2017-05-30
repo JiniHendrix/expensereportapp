@@ -33,7 +33,7 @@ userCntl.getUser = (req, res) => {
   })
 }
 
-userCntl.addUser = (req, res) => {
+userCntl.signup = (req, res) => {
   Users.findOneAndUpdate({ username: req.body.username }, { $setOnInsert: req.body }, { upsert: true, new: false })
     .select('-password')
     .exec((err, doc) => {
@@ -48,8 +48,10 @@ userCntl.editUser = (req, res) => {
   //update username or password given a username
 }
 
-userCntl.deleteUser = (req, res) => {
-  //delete user given a username
+userCntl.deleteUser = (req, res, next) => {
+  Users.findOneAndRemove({username: req.params.username}, (err, res) => {
+    next();
+  })
 }
 
 userCntl.addExpense = (req, res) => {
@@ -121,10 +123,20 @@ userCntl.addComment = (req, res) => {
 // }
 
 userCntl.getAllUsers = (req, res) => {
-  Users.find({ type: 'User' }, (err, users) => {
+  Users.find({ userType: 'User' }, (err, users) => {
     if (err) res.send(err);
     res.send(users);
   })
 }
 
+userCntl.addUser = (req, res, next) => {
+  Users.findOneAndUpdate({ username: req.body.username }, { $setOnInsert: req.body }, { upsert: true, new: false })
+    .select('-password')
+    .exec((err, doc) => {
+      if (err) return res.send(err);
+      //doc exists only if username is found and no upsert happened thanks to new: false
+      if (doc) return res.status(401).send();
+      else next();
+    });
+}
 module.exports = userCntl;

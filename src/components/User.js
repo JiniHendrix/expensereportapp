@@ -2,6 +2,24 @@ import React from 'react';
 
 export default class User extends React.PureComponent {
 
+  constructor() {
+    super();
+
+    this.delete = this.delete.bind(this);
+  }
+
+  delete() {
+    fetch(`/usermanager/${this.props.user.username}`, {
+      method: 'DELETE'
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        this.props.setUsersList(res);
+      })
+  }
+
   render() {
     const {
       username,
@@ -16,7 +34,7 @@ export default class User extends React.PureComponent {
           <p>password: {password}</p>
         </div>
         <div className='buttons-type'>
-          <button className='btn'>Delete</button>
+          <button className='btn' onClick={this.delete}>Delete</button>
           <button className='btn'>Edit</button>
         </div>
       </div>

@@ -5,6 +5,7 @@ import ExpenseForm from './ExpenseForm';
 import Login from './Login';
 import Signup from './Signup';
 import Users from './Users';
+import AddUserForm from './AddUserForm';
 import {
   toggleLoading,
   setUserDetails,
@@ -47,11 +48,12 @@ class App extends React.Component {
           return !this.props.isLoggedIn ?
             <Redirect to='/' /> :
             this.props.userDetails.userType === 'User' ? <Expenses isEditing={this.props.isEditing} expenses={this.props.userDetails.expenses} username={this.props.userDetails.username} setUserDetails={this.props.setUserDetails} /> :
-              this.props.userDetails.userType === 'User Manager' ? <Users usersList={this.props.usersList}  /> :
+              this.props.userDetails.userType === 'User Manager' ? <Users usersList={this.props.usersList} setUsersList={this.props.setUsersList} /> :
                 null
         }} />
         <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm type='new' /> : <Redirect to='/' /> }} />
         <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' /> }} />
+        <Route path='/add_user' render={() => {return <AddUserForm setUsersList={setUsersList}/>}} />
       </div>
     )
   }
