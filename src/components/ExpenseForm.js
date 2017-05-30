@@ -22,7 +22,7 @@ class ExpenseForm extends React.PureComponent {
     const amount = document.getElementById('amount').value;
     const description = document.getElementById('description').value || '';
     const dateTime = new Date(date + 'T' + time);
-    const id = this.props.expenseDetails._id;
+    const id = this.props.expenseFormValues._id;
     e.preventDefault();
 
     toggleLoading();
@@ -64,7 +64,7 @@ class ExpenseForm extends React.PureComponent {
           return res.json();
         })
         .then(res => {
-          setUserDetails(res);
+          setUserDetails(res.user);
           toggleLoading();
         })
     }
@@ -77,7 +77,7 @@ class ExpenseForm extends React.PureComponent {
       description,
       date,
       time
-    } = this.props.expenseDetails;
+    } = this.props.expenseFormValues;
     
     if (this.props.type === 'edit' && this.props.isEditing === false) {
       return <Redirect to='/home' />
@@ -131,7 +131,7 @@ const mapDispatchToProps = function (dispatch) {
 
 const mapStateToProps = (state) => {
   return {
-    expenseDetails: state.expenseDetails,
+    expenseFormValues: state.expenseFormValues,
     userDetails: state.userDetails,
     isEditing: state.isEditing
   }

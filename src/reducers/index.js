@@ -7,7 +7,8 @@ import {
   SET_LOGGED_IN,
   EDITING_EXPENSE,
   HANDLE_CHANGE,
-  SET_DEFAULT_EXPENSE
+  SET_DEFAULT_EXPENSE_FORM_VALUES,
+  SET_USERS_LIST
 } from '../actions';
 
 
@@ -17,13 +18,14 @@ const initialState = {
   isLoading: false,
   isLoggedIn: false,
   isEditing: false,
-  expenseDetails: {
+  expenseFormValues: {
     date: '',
     time: '',
     amount: 0,
     description: '',
     _id: ''
-  }
+  },
+  usersList: []
 }
 
 
@@ -47,12 +49,12 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { isLoggedIn: true });
 
     case EDITING_EXPENSE:
-      return Object.assign({}, state, { expenseDetails: action.expenseDetails, isEditing: true });
+      return Object.assign({}, state, { expenseFormValues: action.expenseFormValues, isEditing: true });
 
-    case SET_DEFAULT_EXPENSE:
+    case SET_DEFAULT_EXPENSE_FORM_VALUES:
       return Object.assign({}, state, {
         isEditing: false,
-        expenseDetails: {
+        expenseFormValues: {
           date: '',
           time: '',
           amount: 0,
@@ -62,9 +64,12 @@ const reducer = (state = initialState, action) => {
       });
 
     case HANDLE_CHANGE:
-      const expenseCopy = { expenseDetails: { ...state.expenseDetails } };
-      expenseCopy.expenseDetails[action.name] = action.value;
+      const expenseCopy = { expenseFormValues: { ...state.expenseFormValues } };
+      expenseCopy.expenseFormValues[action.name] = action.value;
       return Object.assign({}, state, expenseCopy);
+
+    case SET_USERS_LIST:
+      return Object.assign({}, state, {usersList: action.usersList})
 
     default: return state;
   }

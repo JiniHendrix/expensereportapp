@@ -5,7 +5,8 @@ export const UNSET_SIGNEDUP_FLAG = 'UNSET_SIGNEDUP_FLAG';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const EDITING_EXPENSE = 'EDITING_EXPENSE';
 export const HANDLE_CHANGE = 'HANDLE_CHANGE';
-export const SET_DEFAULT_EXPENSE = 'SET_DEFAULT_EXPENSE';
+export const SET_DEFAULT_EXPENSE_FORM_VALUES = 'SET_DEFAULT_EXPENSE';
+export const SET_USERS_LIST = 'SET_USERS_LIST';
 
 export const toggleLoading = () => {
   return {
@@ -59,7 +60,7 @@ export const finishEditingExpense = () => {
 
 export const setDefaultExpense = () => {
   return {
-    type: SET_DEFAULT_EXPENSE
+    type: SET_DEFAULT_EXPENSE_FORM_VALUES
   }
 }
 
@@ -68,5 +69,12 @@ export const handleChange = (name, value) => {
     type: HANDLE_CHANGE,
     name,
     value
+  }
+}
+
+export const setUsersList = (usersList) => {
+  return {
+    type: SET_USERS_LIST,
+    usersList
   }
 }

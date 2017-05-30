@@ -13,7 +13,7 @@ export default class Login extends React.PureComponent {
   login(e) {
     e.preventDefault();
 
-    const {setLoggedIn, setUserDetails} = this.props;
+    const {setLoggedIn, setUserDetails, setUsersList} = this.props;
     const username = document.getElementById('username-input').value;
     const password = document.getElementById('password-input').value;
 
@@ -21,6 +21,7 @@ export default class Login extends React.PureComponent {
       .then((res) => {
         if (res.status === 401) {
           console.log('wrong username/password');
+          document.querySelector('.login-signup').style.borderColor = 'red';
         }
         else {
           return res.json();
@@ -28,7 +29,8 @@ export default class Login extends React.PureComponent {
       })
       .then((res) => {
         if (res) {
-          setUserDetails(res);
+          setUserDetails(res.user);
+          setUsersList(res.usersList)
           setLoggedIn();
         }
       })

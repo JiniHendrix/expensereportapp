@@ -79,3 +79,20 @@ hr {
 .expense .btn {
   float:right;
 }
+
+.user-pass {
+  width: 50%;
+  float:left;
+}
+.buttons-type {
+  width:50%;
+  float:right;
+}
+
+.buttons-type .btn {
+  float:right;
+}
+
+.button-type h1 {
+  clear:both;
+}
