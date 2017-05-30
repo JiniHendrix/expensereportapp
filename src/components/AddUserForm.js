@@ -28,7 +28,7 @@ export default class AddUserForm extends React.PureComponent {
         return res.json();
       })
       .then(res => {
-        console.log(res);
+        console.log('ADDUSER:', res);
         this.props.setUsersList(res);
       })
 

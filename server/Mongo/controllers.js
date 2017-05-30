@@ -49,6 +49,7 @@ userCntl.editUser = (req, res) => {
 }
 
 userCntl.deleteUser = (req, res, next) => {
+  console.log(req.params)
   Users.findOneAndRemove({username: req.params.username}, (err, res) => {
     next();
   })

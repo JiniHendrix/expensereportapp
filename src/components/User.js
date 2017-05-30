@@ -9,6 +9,7 @@ export default class User extends React.PureComponent {
   }
 
   delete() {
+    console.log(this.props)
     fetch(`/usermanager/${this.props.user.username}`, {
       method: 'DELETE'
     })

@@ -53,7 +53,7 @@ class App extends React.Component {
         }} />
         <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm type='new' /> : <Redirect to='/' /> }} />
         <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' /> }} />
-        <Route path='/add_user' render={() => {return <AddUserForm setUsersList={setUsersList}/>}} />
+        <Route path='/add_user' render={() => {return <AddUserForm setUsersList={this.props.setUsersList}/>}} />
       </div>
     )
   }

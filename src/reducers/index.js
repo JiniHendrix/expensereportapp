@@ -69,6 +69,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, expenseCopy);
 
     case SET_USERS_LIST:
+      console.log('SETTING USERS')
       return Object.assign({}, state, {usersList: action.usersList})
 
     default: return state;
