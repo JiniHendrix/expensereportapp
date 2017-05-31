@@ -36,7 +36,7 @@ export default class User extends React.PureComponent {
         </div>
         <div className='buttons-type'>
           <button className='btn' onClick={this.delete}>Delete</button>
-          <button className='btn'>Edit</button>
+          <button className='btn' onClick={this.props.editingUser.bind(null, this.props.user)}>Edit</button>
         </div>
       </div>
     )

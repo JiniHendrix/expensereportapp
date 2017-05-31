@@ -14,7 +14,9 @@ import {
   setSignedUpFlag,
   unsetSignedUpFlag,
   setDefaultExpense,
-  setUsersList
+  setUsersList,
+  setDefaultUserFormValues,
+  editingUser
 } from '../actions';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -41,19 +43,20 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Nav userDetails={this.props.userDetails} isLoggedIn={this.props.isLoggedIn} setDefaultExpense={this.props.setDefaultExpense} />
+        <Nav userDetails={this.props.userDetails} setDefaultUserFormValues={this.props.setDefaultUserFormValues} isLoggedIn={this.props.isLoggedIn} setDefaultExpense={this.props.setDefaultExpense} />
         <Route exact path='/' component={() => { return <Login unsetSignedUpFlag={this.props.unsetSignedUpFlag} setUsersList={this.props.setUsersList} setUserDetails={this.props.setUserDetails} isLoggedIn={this.props.isLoggedIn} setLoggedIn={this.props.setLoggedIn} /> }} />
         <Route path='/signup' component={() => { return <Signup signedUp={this.props.signedUp} setSignedUpFlag={this.props.setSignedUpFlag} /> }} />
         <Route path='/home' render={() => {
           return !this.props.isLoggedIn ?
             <Redirect to='/' /> :
             this.props.userDetails.userType === 'User' ? <Expenses isEditing={this.props.isEditing} expenses={this.props.userDetails.expenses} username={this.props.userDetails.username} setUserDetails={this.props.setUserDetails} /> :
-              this.props.userDetails.userType === 'User Manager' ? <Users usersList={this.props.usersList} setUsersList={this.props.setUsersList} /> :
+              this.props.userDetails.userType === 'User Manager' ? <Users usersList={this.props.usersList} editingUser={this.props.editingUser} setUsersList={this.props.setUsersList} isEditing={this.props.isEditing}/> :
                 null
         }} />
         <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm type='new' /> : <Redirect to='/' /> }} />
         <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' /> }} />
-        <Route path='/add_user' render={() => {return <UserForm setUsersList={this.props.setUsersList}/>}} />
+        <Route path='/add_user' render={() => {return <UserForm isEditing={this.props.isEditing} setUsersList={this.props.setUsersList}/>}} />
+        <Route path='/edit_user' render={() => {return <UserForm isEditing={this.props.isEditing} setUsersList={this.props.setUsersList}/>}} />
       </div>
     )
   }
@@ -81,8 +84,13 @@ const mapDispatchToProps = function (dispatch) {
     },
     setUsersList: (usersList) => {
       dispatch(setUsersList(usersList));
+    },
+    setDefaultUserFormValues: () => {
+      dispatch(setDefaultUserFormValues());
+    },
+    editingUser: userDetails => {
+      dispatch(editingUser(userDetails));
     }
-
   }
 }
 

@@ -23,6 +23,9 @@ app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
 app.get('/usermanager', userCntl.getAllUsers);
 app.post('/usermanager', userCntl.addUser, userCntl.getAllUsers);
 app.delete('/usermanager/:username', userCntl.deleteUser, userCntl.getAllUsers);
+app.patch('/usermanager/:userId', userCntl.updateUser, userCntl.getAllUsers);
+
+
 
 app.get(/\/(|new_expense|home|login|signup|edit_expense)$/, (req, res) => {
   fs.readFile(path.join(__dirname, '../src/index.html'), 'utf8', (err, html) => {

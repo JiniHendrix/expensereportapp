@@ -55,10 +55,15 @@ export const editExpense = ({_id, amount, description, date, time}) => {
   }
 }
 
-export const editingUser = userDetails => {
+export const editingUser = ({_id, username, password, userType}) => {
   return {
     type: EDITING_USER,
-    userDetails
+    userFormValues: {
+      _id,
+      username,
+      password,
+      userType
+    }
   }
 }
 
@@ -81,6 +86,7 @@ export const setDefaultUserFormValues = () => {
     type: SET_DEFAULT_USER_FORM_VALUES
   }
 }
+
 export const handleUserFormChange = (name, value) => {
   return {
     type: HANDLE_USER_FORM_CHANGE,
@@ -89,8 +95,7 @@ export const handleUserFormChange = (name, value) => {
   }
 }
 
-
-export const setUsersList = (usersList) => {
+export const setUsersList = usersList => {
   return {
     type: SET_USERS_LIST,
     usersList

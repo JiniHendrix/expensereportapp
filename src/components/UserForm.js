@@ -1,43 +1,71 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { handleUserFormChange } from '../actions';
+import { handleUserFormChange, setDefaultUserFormValues } from '../actions';
 
 class UserForm extends React.PureComponent {
   submitHandler(e) {
     e.preventDefault();
 
-    const username = document.getElementById('username-input').value;
-    const password = document.getElementById('password-input').value;
-    const userType = document.getElementById('permission-input').value;
-    const {setSignedUpFlag} = this.props;
+    const {
+      username,
+      password,
+      userType,
+      _id
+    } = this.props.userFormValues;
 
-    fetch('/usermanager', {
-      method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-        userType
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then((res) => {
-        if (res.status === 401) {
-          document.querySelector('.login-signup').style.borderColor = 'red';
+    if (this.props.isEditing) {
+      fetch(`/usermanager/${_id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          username,
+          password,
+          userType
+        }),
+        headers: {
+          'Content-Type': 'application/json'
         }
-        return res.json();
       })
-      .then(res => {
-        this.props.setUsersList(res);
+        .then((res) => {
+          if (res.status === 401) {
+            document.querySelector('.login-signup').style.borderColor = 'red';
+            return 'username exists';
+          }
+          return res.json();
+        })
+        .then(res => {
+          if (res === 'username exists') return;
+          this.props.setUsersList(res);
+        })
+    }
+    else {
+      fetch('/usermanager', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+          userType
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
+        .then((res) => {
+          if (res.status === 401) {
+            document.querySelector('.login-signup').style.borderColor = 'red';
+            return 'username exists';
+          }
+          return res.json();
+        })
+        .then(res => {
+          if (res === 'username exists') return;
+          this.props.setUsersList(res);
+        })
+    }
 
-    document.getElementById('username-input').value = '';
-    document.getElementById('password-input').value = '';
+    this.props.setDefault();
   }
   render() {
-    console.log('PROPS:', this.props);
     const {
       handleUserFormChange,
       userFormValues: {
@@ -85,6 +113,9 @@ const mapDispatchToProps = dispatch => {
   return {
     handleUserFormChange: (field, e) => {
       dispatch(handleUserFormChange(field, e.target.value))
+    },
+    setDefault: () => {
+      dispatch(setDefaultUserFormValues());
     }
   }
 }

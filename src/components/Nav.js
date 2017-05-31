@@ -23,10 +23,10 @@ export default class Nav extends React.PureComponent {
       nav = (
         <ul className='nav navbar-nav'>
           <li>
-            <Link to='/home'>Home</Link>
+            <Link to='/home' onClick={this.props.setDefaultUserFormValues.bind(this)}>Home</Link>
           </li>
           <li>
-            <Link to='/add_user'>Add User</Link>
+            <Link to='/add_user' onClick={this.props.setDefaultUserFormValues.bind(this)}>Add User</Link>
           </li>
         </ul>
       )

@@ -50,7 +50,7 @@ userCntl.editUser = (req, res) => {
 
 userCntl.deleteUser = (req, res, next) => {
   console.log(req.params)
-  Users.findOneAndRemove({username: req.params.username}, (err, res) => {
+  Users.findOneAndRemove({ username: req.params.username }, (err, res) => {
     next();
   })
 }
@@ -140,4 +140,18 @@ userCntl.addUser = (req, res, next) => {
       else next();
     });
 }
+
+userCntl.updateUser = (req, res, next) => {
+  Users.findOne({ username: req.body.username }, (err, found) => {
+    if (found._id + '' !== req.params.userId) return res.status(401).send();
+    if (err) return res.send(err);
+    else {
+      Users.findOneAndUpdate({ _id: req.params.userId }, req.body, (err, result) => {
+        if (err) return res.send(err);
+        next();
+      })
+    }
+  })
+}
+
 module.exports = userCntl;
