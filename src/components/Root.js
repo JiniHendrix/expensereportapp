@@ -14,15 +14,3 @@ const Root = ({ store }) => {
 }
 
 export default Root
-
-/*export default class Root extends React.PureComponent {
-  render() {
-    return (
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        <Route path='/' component={App} />
-      </Router>
-    </Provider>
-  )
-  }
-}*/

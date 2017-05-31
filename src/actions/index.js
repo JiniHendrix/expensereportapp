@@ -12,6 +12,7 @@ export const HANDLE_USER_FORM_CHANGE = 'HANDLE_USER_FORM_CHANGE';
 export const EDITING_USER = 'EDITING_USER';
 export const ADMIN_SET_USER_EXPENSES = 'ADMIN_SET_USER_EXPENSES';
 export const DONE_VIEWING_USER_EXPENSES = 'DONE_VIEWING_USER_EXPENSES';
+export const APPLY_FILTERS = 'APPLY_FILTERS';
 export const HANDLE_FILTER_CHANGE = 'HANDLE_FILTER_CHANGE';
 export const RESET_FILTERS = 'RESET_FILTERS';
 
@@ -130,5 +131,12 @@ export const handleFilterChange = (field, value) => {
     type: HANDLE_FILTER_CHANGE,
     field,
     value
+  }
+}
+
+export const applyFilters = filters => {
+  return {
+    type: APPLY_FILTERS,
+    filters
   }
 }

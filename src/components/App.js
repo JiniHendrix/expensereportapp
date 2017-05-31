@@ -73,6 +73,7 @@ class App extends React.Component {
                 setUserDetails={this.props.setUserDetails}
                 selectedUser={this.props.selectedUser}
                 adminSetUserExpenses={this.props.adminSetUserExpenses}
+                filters={this.props.filters}
               /> :
               <Users
                 usersList={this.props.usersList}
@@ -106,6 +107,7 @@ class App extends React.Component {
             setUserDetails={this.props.setUserDetails}
             selectedUser={this.props.selectedUser}
             adminSetUserExpenses={this.props.adminSetUserExpenses}
+            filters={this.props.filters}
           />
         }} />
       </div>
@@ -158,7 +160,8 @@ const mapStateToProps = (state) => {
     signedUp: state.signedUp,
     isEditing: state.isEditing,
     usersList: state.usersList,
-    selectedUser: state.selectedUser
+    selectedUser: state.selectedUser,
+    filters: state.filters
   }
 }
 

@@ -14,6 +14,7 @@ import {
   EDITING_USER,
   ADMIN_SET_USER_EXPENSES,
   DONE_VIEWING_USER_EXPENSES,
+  APPLY_FILTERS,
   RESET_FILTERS,
   HANDLE_FILTER_CHANGE
 } from '../actions';
@@ -119,20 +120,23 @@ const reducer = (state = initialState, action) => {
     case DONE_VIEWING_USER_EXPENSES:
       return Object.assign({}, state, { selectedUser: null });
 
-    case RESET_FILTERS:
-      return Object.assign({}, state, {
-        filters: {
-          from: '',
-          to: '',
-          min: '',
-          max: ''
-        }
-      });
+    // case RESET_FILTERS:
+    //   return Object.assign({}, state, {
+    //     filters: {
+    //       from: '',
+    //       to: '',
+    //       min: '',
+    //       max: ''
+    //     }
+    //   });
 
-    case HANDLE_FILTER_CHANGE:
-      const filtersCopy = {filters: {...state.filters}};
-      filtersCopy.filters[action.field] = action.value;
-      return Object.assign({}, state, filtersCopy);
+    // case HANDLE_FILTER_CHANGE:
+    //   const filtersCopy = {filters: {...state.filters}};
+    //   filtersCopy.filters[action.field] = action.value;
+    //   return Object.assign({}, state, filtersCopy);
+
+    case APPLY_FILTERS:
+      return Object.assign({}, state, {filters: action.filters});
 
     default: return state;
   }
