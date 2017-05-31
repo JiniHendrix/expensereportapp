@@ -10,6 +10,8 @@ export const SET_USERS_LIST = 'SET_USERS_LIST';
 export const SET_DEFAULT_USER_FORM_VALUES = 'SET_DEFAULT_USER_FORM_VALUES';
 export const HANDLE_USER_FORM_CHANGE = 'HANDLE_USER_FORM_CHANGE';
 export const EDITING_USER = 'EDITING_USER';
+export const ADMIN_SET_USER_EXPENSES = 'ADMIN_SET_USER_EXPENSES';
+export const DONE_VIEWING_USER_EXPENSES = 'DONE_VIEWING_USER_EXPENSES';
 
 export const toggleLoading = () => {
   return {
@@ -45,7 +47,7 @@ export const setLoggedIn = () => {
 export const editExpense = ({_id, amount, description, date, time}) => {
   return {
     type: EDITING_EXPENSE,
-    expenseDetails: {
+    expenseFormValues: {
       _id,
       amount,
       description,
@@ -99,5 +101,18 @@ export const setUsersList = usersList => {
   return {
     type: SET_USERS_LIST,
     usersList
+  }
+}
+
+export const adminSetUserExpenses = selectedUser => {
+  return {
+    type: ADMIN_SET_USER_EXPENSES,
+    selectedUser
+  }
+}
+
+export const doneViewingUser = () => {
+  return {
+    type: DONE_VIEWING_USER_EXPENSES
   }
 }

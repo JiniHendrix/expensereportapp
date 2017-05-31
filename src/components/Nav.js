@@ -6,8 +6,9 @@ export default class Nav extends React.PureComponent {
     if (!this.props.isLoggedIn) return null;
 
     let nav;
+    const {userType} = this.props.userDetails;
 
-    if (this.props.userDetails.userType === 'User') {
+    if (userType === 'User') {
       nav = (
         <ul className='nav navbar-nav'>
           <li>
@@ -19,7 +20,7 @@ export default class Nav extends React.PureComponent {
         </ul>
       )
     }
-    else if (this.props.userDetails.userType === 'User Manager') {
+    else if (userType === 'User Manager' || (userType === 'Admin' && !this.props.selectedUser)) {
       nav = (
         <ul className='nav navbar-nav'>
           <li>
@@ -27,6 +28,21 @@ export default class Nav extends React.PureComponent {
           </li>
           <li>
             <Link to='/add_user' onClick={this.props.setDefaultUserFormValues.bind(this)}>Add User</Link>
+          </li>
+        </ul>
+      )
+    }
+    else if (userType === 'Admin' && this.props.selectedUser) {
+      nav = (
+        <ul className='nav navbar-nav'>
+          <li>
+            <Link to='/home' onClick={this.props.doneViewingUser}>Home</Link>
+          </li>
+          <li>
+            <Link to='/view_user' onClick={this.props.setDefaultExpense}>{this.props.selectedUser.username}</Link>
+          </li>
+          <li>
+            <Link to='/new_expense' onClick={this.props.setDefaultExpense}>New Expense</Link>
           </li>
         </ul>
       )

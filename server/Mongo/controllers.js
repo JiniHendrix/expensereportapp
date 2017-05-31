@@ -78,7 +78,6 @@ userCntl.updateExpense = (req, res) => {
       }
     }, { new: true }).select('-password')
     .exec((err, result) => {
-      console.log(result)
       if (err) return res.send(err);
       res.send(result);
     })

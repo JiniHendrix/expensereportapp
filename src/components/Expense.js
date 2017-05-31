@@ -43,7 +43,7 @@ class Expense extends React.PureComponent {
   comment(e) {
     e.preventDefault();
     const comment = document.getElementById(this.props._id).value;
-    console.log('comment:',comment)
+
     fetch(`/user/${this.props.username}/expenses/${this.props._id}`, {
       method:'POST',
       body: JSON.stringify({
@@ -57,8 +57,8 @@ class Expense extends React.PureComponent {
         return res.json();
       })
       .then(res => {
-        console.log(res);
-        this.props.setUserDetails(res);
+        console.log(this.props.selectedUser);
+        this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
       });
     document.getElementById(this.props._id).value = '';
   }
@@ -74,10 +74,12 @@ class Expense extends React.PureComponent {
       return <li key={i}>{elem.comment}</li>
     });
 
+    const dateInst = new Date(dateTime);
+
     return (
       <div className='expense container-fluid'>
         <div className='expense-left-col'>
-          <p className='expense-date'>{dateTime}</p>
+          <p className='expense-date'>{dateInst.toLocaleString()}</p>
           <p className='expense-desc'>{description}</p>
         </div>
         <button className='btn' onClick={this.delete}>Delete</button>

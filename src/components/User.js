@@ -6,6 +6,7 @@ export default class User extends React.PureComponent {
     super();
 
     this.delete = this.delete.bind(this);
+    this.viewUserExpenses = this.viewUserExpenses.bind(this)
   }
 
   delete() {
@@ -18,6 +19,16 @@ export default class User extends React.PureComponent {
       })
       .then(res => {
         this.props.setUsersList(res);
+      })
+  }
+
+  viewUserExpenses() {
+    fetch(`/user/${this.props.user.username}`)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        this.props.adminSetUserExpenses(res);
       })
   }
 
@@ -37,6 +48,7 @@ export default class User extends React.PureComponent {
         <div className='buttons-type'>
           <button className='btn' onClick={this.delete}>Delete</button>
           <button className='btn' onClick={this.props.editingUser.bind(null, this.props.user)}>Edit</button>
+          {this.props.userType === 'Admin' ? <button className='btn' onClick={this.viewUserExpenses}>View Expenses</button> : null}
         </div>
       </div>
     )

@@ -11,7 +11,9 @@ import {
   SET_USERS_LIST,
   SET_DEFAULT_USER_FORM_VALUES,
   HANDLE_USER_FORM_CHANGE,
-  EDITING_USER
+  EDITING_USER,
+  ADMIN_SET_USER_EXPENSES,
+  DONE_VIEWING_USER_EXPENSES
 } from '../actions';
 
 
@@ -34,7 +36,8 @@ const initialState = {
     password: '',
     userType: 'User',
     _id: ''
-  }
+  },
+  selectedUser: null
 }
 
 
@@ -101,8 +104,13 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, userCopy);
 
     case SET_USERS_LIST:
-      console.log('SETTING USERS')
-      return Object.assign({}, state, { usersList: action.usersList })
+      return Object.assign({}, state, { usersList: action.usersList });
+
+    case ADMIN_SET_USER_EXPENSES:
+      return Object.assign({}, state, {selectedUser: action.selectedUser});
+
+    case DONE_VIEWING_USER_EXPENSES:
+      return Object.assign({}, state, {selectedUser: null});
 
     default: return state;
   }

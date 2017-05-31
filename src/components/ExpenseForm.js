@@ -3,7 +3,8 @@ import {
   toggleLoading,
   setUserDetails,
   handleExpenseFormChange,
-  setDefaultExpense
+  setDefaultExpense,
+  adminSetUserExpenses
 } from '../actions';
 import { connect } from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -15,14 +16,24 @@ class ExpenseForm extends React.PureComponent {
   }
 
   submitHandler(e) {
-    const username = this.props.userDetails.username;
-    const {toggleLoading, setUserDetails, setDefaultExpense} = this.props;
-    const date = document.getElementById('date').value;
-    const time = document.getElementById('time').value;
-    const amount = document.getElementById('amount').value;
-    const description = document.getElementById('description').value || '';
+    const {
+      toggleLoading, 
+      setUserDetails, 
+      setDefaultExpense,
+      selectedUser,
+      userDetails,
+      expenseFormValues: {
+        date,
+        time,
+        amount,
+        description,
+        _id
+      },
+      adminSetUserExpenses
+    } = this.props;
+    const username = selectedUser ? selectedUser.username : userDetails.username;
+
     const dateTime = new Date(date + 'T' + time);
-    const id = this.props.expenseFormValues._id;
     e.preventDefault();
 
     toggleLoading();
@@ -43,13 +54,14 @@ class ExpenseForm extends React.PureComponent {
           return res.json();
         })
         .then(res => {
-          setUserDetails(res);
+          //ternary here for admin vs user
+          selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
         })
     }
 
     if (this.props.type === 'edit') {
-      fetch(`/user/${username}/expenses/${id}`, {
+      fetch(`/user/${username}/expenses/${_id}`, {
         method: 'PATCH',
         body: JSON.stringify({
           dateTime,
@@ -64,7 +76,7 @@ class ExpenseForm extends React.PureComponent {
           return res.json();
         })
         .then(res => {
-          setUserDetails(res.user);
+          selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
         })
     }
@@ -125,6 +137,9 @@ const mapDispatchToProps = function (dispatch) {
     },
     setDefaultExpense: () => {
       dispatch(setDefaultExpense());
+    },
+    adminSetUserExpenses: (userDetails) => {
+      dispatch(adminSetUserExpenses(userDetails))
     }
   }
 }
@@ -133,7 +148,8 @@ const mapStateToProps = (state) => {
   return {
     expenseFormValues: state.expenseFormValues,
     userDetails: state.userDetails,
-    isEditing: state.isEditing
+    isEditing: state.isEditing,
+    selectedUser: state.selectedUser
   }
 }
 
