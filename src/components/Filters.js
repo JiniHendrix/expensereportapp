@@ -15,9 +15,10 @@ export default class Filters extends React.PureComponent {
             <div className='form-group'>
               <label>Amounts</label>
               <input type='number' placeholder='Min' />
-              <input type='number' placeholder='Max'/>
+              <input type='number' placeholder='Max' value={null}/>
             </div>
           </form>
+          <button className='btn'>Reset Filters</button>
           <button className='btn'>Get Weekly Stats</button>
         </div>
       </div>

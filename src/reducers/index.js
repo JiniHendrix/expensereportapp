@@ -13,13 +13,20 @@ import {
   HANDLE_USER_FORM_CHANGE,
   EDITING_USER,
   ADMIN_SET_USER_EXPENSES,
-  DONE_VIEWING_USER_EXPENSES
+  DONE_VIEWING_USER_EXPENSES,
+  RESET_FILTERS,
+  HANDLE_FILTER_CHANGE
 } from '../actions';
 
 
 const initialState = {
   userDetails: { username: '' },
-  filter: 'NONE',
+  filters: {
+    from: '',
+    to: '',
+    min: null,
+    max: null
+  },
   isLoading: false,
   isLoggedIn: false,
   isEditing: false,
@@ -107,10 +114,25 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { usersList: action.usersList });
 
     case ADMIN_SET_USER_EXPENSES:
-      return Object.assign({}, state, {selectedUser: action.selectedUser});
+      return Object.assign({}, state, { selectedUser: action.selectedUser });
 
     case DONE_VIEWING_USER_EXPENSES:
-      return Object.assign({}, state, {selectedUser: null});
+      return Object.assign({}, state, { selectedUser: null });
+
+    case RESET_FILTERS:
+      return Object.assign({}, state, {
+        filters: {
+          from: '',
+          to: '',
+          min: null,
+          max: null
+        }
+      });
+
+    case HANDLE_FILTER_CHANGE:
+      const filtersCopy = {filters: {...state.filters}};
+      filtersCopy.filters[action.field] = action.value;
+      return Object.assign({}, state, filtersCopy);
 
     default: return state;
   }
