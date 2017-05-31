@@ -25,7 +25,7 @@ export default class Users extends React.PureComponent {
 
 
     return (
-      <div className='expenses'>
+      <div className='users'>
         {users}
       </div>
     )

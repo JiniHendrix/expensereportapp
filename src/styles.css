@@ -5,7 +5,15 @@ body {
 .expenses {
   width: 500px;
   height: 700px;
-  margin:auto;
+  margin-right: 50px;
+  margin-top: 50px;
+  float:right;
+}
+
+.users {
+  width: 500px;
+  height: 700px;
+  margin: auto;
   margin-top: 50px;
 }
 @keyframes expense {
@@ -18,9 +26,14 @@ body {
     opacity: 1;
   }
 }
-/*.expense-wrapper {
-  position: relative;
-}*/
+
+.filters {
+  margin-top: 50px;
+  height: 300px;
+  width: 200px;
+  float:left;
+}
+
 .expense {
   position:relative;
   width: 500px;
@@ -96,3 +109,4 @@ hr {
 .button-type h1 {
   clear:both;
 }
+
