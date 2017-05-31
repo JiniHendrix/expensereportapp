@@ -142,7 +142,7 @@ userCntl.addUser = (req, res, next) => {
 
 userCntl.updateUser = (req, res, next) => {
   Users.findOne({ username: req.body.username }, (err, found) => {
-    if (found._id + '' !== req.params.userId) return res.status(401).send();
+    if (found && found._id + '' !== req.params.userId) return res.status(401).send();
     if (err) return res.send(err);
     else {
       Users.findOneAndUpdate({ _id: req.params.userId }, req.body, (err, result) => {
