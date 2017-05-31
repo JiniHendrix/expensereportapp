@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { handleUserFormChange } from '../actions';
 
-export default class AddUserForm extends React.PureComponent {
-  addUser(e) {
+class UserForm extends React.PureComponent {
+  submitHandler(e) {
     e.preventDefault();
 
     const username = document.getElementById('username-input').value;
@@ -28,7 +30,6 @@ export default class AddUserForm extends React.PureComponent {
         return res.json();
       })
       .then(res => {
-        console.log('ADDUSER:', res);
         this.props.setUsersList(res);
       })
 
@@ -36,21 +37,31 @@ export default class AddUserForm extends React.PureComponent {
     document.getElementById('password-input').value = '';
   }
   render() {
-    return (  
+    console.log('PROPS:', this.props);
+    const {
+      handleUserFormChange,
+      userFormValues: {
+        username,
+        password,
+        userType
+      }
+    } = this.props;
+
+    return (
       <div className='login-signup'>
         <div className='container-fluid'>
-          <form onSubmit={this.addUser.bind(this)}>
+          <form onSubmit={this.submitHandler.bind(this)}>
             <div className='form-group'>
               <label for='username-input'>Username:</label>
-              <input type='text' className='form-control' id='username-input' required />
+              <input type='text' className='form-control' id='username-input' value={username} onChange={handleUserFormChange.bind(this, 'username')} required />
             </div>
             <div className='form-group'>
               <label for='password-input'>Password:</label>
-              <input type='text' className='form-control' id='password-input' required />
+              <input type='text' className='form-control' id='password-input' value={password} onChange={handleUserFormChange.bind(this, 'password')} required />
             </div>
             <div className='form-group'>
               <label for='permission-input'>Level:</label>
-              <select className='form-control' id='permission-input' required>
+              <select className='form-control' id='permission-input' value={userType} onChange={handleUserFormChange.bind(this, 'userType')} required>
                 <option>User</option>
                 <option>User Manager</option>
                 <option>Admin</option>
@@ -63,3 +74,24 @@ export default class AddUserForm extends React.PureComponent {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    userFormValues: state.userFormValues
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleUserFormChange: (field, e) => {
+      dispatch(handleUserFormChange(field, e.target.value))
+    }
+  }
+}
+
+const ContainerUserForm = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserForm);
+
+export default ContainerUserForm;

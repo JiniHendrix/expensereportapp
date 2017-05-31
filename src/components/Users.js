@@ -14,6 +14,10 @@ export default class Users extends React.PureComponent {
       return <User key={i} user={user} setUsersList={this.props.setUsersList}/>
     });
 
+    /*if (isEditing) {
+      return <AddUserForm.js
+    }*/
+
     return (
       <div className='expenses'>
         {users}

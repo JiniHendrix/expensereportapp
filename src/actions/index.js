@@ -4,9 +4,12 @@ export const SET_SIGNEDUP_FLAG = 'SET_SIGNEDUP_FLAG';
 export const UNSET_SIGNEDUP_FLAG = 'UNSET_SIGNEDUP_FLAG';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const EDITING_EXPENSE = 'EDITING_EXPENSE';
-export const HANDLE_CHANGE = 'HANDLE_CHANGE';
-export const SET_DEFAULT_EXPENSE_FORM_VALUES = 'SET_DEFAULT_EXPENSE';
+export const HANDLE_EXPENSE_FORM_CHANGE = 'HANDLE_EXPENSE_FORM_CHANGE';
+export const SET_DEFAULT_EXPENSE_FORM_VALUES = 'SET_DEFAULT_EXPENSE_FORM_VALUES';
 export const SET_USERS_LIST = 'SET_USERS_LIST';
+export const SET_DEFAULT_USER_FORM_VALUES = 'SET_DEFAULT_USER_FORM_VALUES';
+export const HANDLE_USER_FORM_CHANGE = 'HANDLE_USER_FORM_CHANGE';
+export const EDITING_USER = 'EDITING_USER';
 
 export const toggleLoading = () => {
   return {
@@ -52,9 +55,10 @@ export const editExpense = ({_id, amount, description, date, time}) => {
   }
 }
 
-export const finishEditingExpense = () => {
+export const editingUser = userDetails => {
   return {
-    type: FINISH_EDITING_EXPENSE
+    type: EDITING_USER,
+    userDetails
   }
 }
 
@@ -64,13 +68,27 @@ export const setDefaultExpense = () => {
   }
 }
 
-export const handleChange = (name, value) => {
+export const handleExpenseFormChange = (name, value) => {
   return {
-    type: HANDLE_CHANGE,
+    type: HANDLE_EXPENSE_FORM_CHANGE,
     name,
     value
   }
 }
+
+export const setDefaultUserFormValues = () => {
+  return {
+    type: SET_DEFAULT_USER_FORM_VALUES
+  }
+}
+export const handleUserFormChange = (name, value) => {
+  return {
+    type: HANDLE_USER_FORM_CHANGE,
+    name,
+    value
+  }
+}
+
 
 export const setUsersList = (usersList) => {
   return {

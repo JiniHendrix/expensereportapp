@@ -2,7 +2,7 @@ import React from 'react';
 import {
   toggleLoading,
   setUserDetails,
-  handleChange,
+  handleExpenseFormChange,
   setDefaultExpense
 } from '../actions';
 import { connect } from 'react-redux';
@@ -89,19 +89,19 @@ class ExpenseForm extends React.PureComponent {
           <form onSubmit={this.submitHandler.bind(this)}>
             <div className='form-group'>
               <label for='date'>Date:</label>
-              <input type='date' className='form-control' onChange={this.props.handleChange.bind(this, 'date')} id='date' placeholder='Date' value={date} required />
+              <input type='date' className='form-control' onChange={this.props.handleExpenseFormChange.bind(this, 'date')} id='date' placeholder='Date' value={date} required />
             </div>
             <div className='form-group'>
               <label for='time'>Time:</label>
-              <input type='time' className='form-control' id='time' onChange={this.props.handleChange.bind(this, 'time')} value={time} required />
+              <input type='time' className='form-control' id='time' onChange={this.props.handleExpenseFormChange.bind(this, 'time')} value={time} required />
             </div>
             <div className='form-group'>
               <label for='amount'>Amount:</label>
-              <input type='number' className='form-control' id='amount' onChange={this.props.handleChange.bind(this, 'amount')} value={amount} required />
+              <input type='number' className='form-control' id='amount' onChange={this.props.handleExpenseFormChange.bind(this, 'amount')} value={amount} required />
             </div>
             <div className='form-group'>
               <label for='description' >Description:</label>
-              <textarea className='form-control' rows='2' id='description' onChange={this.props.handleChange.bind(this, 'description')} value={description} />
+              <textarea className='form-control' rows='2' id='description' onChange={this.props.handleExpenseFormChange.bind(this, 'description')} value={description} />
             </div>
             <input type="submit" className="btn btn-info" value="Submit Button" />
           </form>
@@ -120,8 +120,8 @@ const mapDispatchToProps = function (dispatch) {
     setUserDetails: (userDetails) => {
       dispatch(setUserDetails(userDetails));
     },
-    handleChange: (name, e) => {
-      dispatch(handleChange(name, e.target.value));
+    handleExpenseFormChange: (name, e) => {
+      dispatch(handleExpenseFormChange(name, e.target.value));
     },
     setDefaultExpense: () => {
       dispatch(setDefaultExpense());

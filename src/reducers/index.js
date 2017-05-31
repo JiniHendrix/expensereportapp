@@ -6,9 +6,12 @@ import {
   UNSET_SIGNEDUP_FLAG,
   SET_LOGGED_IN,
   EDITING_EXPENSE,
-  HANDLE_CHANGE,
+  HANDLE_EXPENSE_FORM_CHANGE,
   SET_DEFAULT_EXPENSE_FORM_VALUES,
-  SET_USERS_LIST
+  SET_USERS_LIST,
+  SET_DEFAULT_USER_FORM_VALUES,
+  HANDLE_USER_FORM_CHANGE,
+  EDITING_USER
 } from '../actions';
 
 
@@ -25,7 +28,13 @@ const initialState = {
     description: '',
     _id: ''
   },
-  usersList: []
+  usersList: [],
+  userFormValues: {
+    username: '',
+    password: '',
+    userType: 'User',
+    _id: ''
+  }
 }
 
 
@@ -63,14 +72,37 @@ const reducer = (state = initialState, action) => {
         }
       });
 
-    case HANDLE_CHANGE:
+    case HANDLE_EXPENSE_FORM_CHANGE:
       const expenseCopy = { expenseFormValues: { ...state.expenseFormValues } };
       expenseCopy.expenseFormValues[action.name] = action.value;
       return Object.assign({}, state, expenseCopy);
 
+    case SET_DEFAULT_USER_FORM_VALUES:
+      return Object.assign({}, state, {
+        isEditing: false,
+        userFormValues: {
+          username: '',
+          password: '',
+          userType: 'User',
+          _id: ''
+        }
+      });
+
+    case EDITING_USER: {
+      return Object.assign({}, state, {
+        userFormValues: action.userFormValues,
+        isEditing: true
+      })
+    }
+
+    case HANDLE_USER_FORM_CHANGE:
+      const userCopy = { userFormValues: { ...state.userFormValues } };
+      userCopy.userFormValues[action.name] = action.value;
+      return Object.assign({}, state, userCopy);
+
     case SET_USERS_LIST:
       console.log('SETTING USERS')
-      return Object.assign({}, state, {usersList: action.usersList})
+      return Object.assign({}, state, { usersList: action.usersList })
 
     default: return state;
   }
