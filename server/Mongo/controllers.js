@@ -44,19 +44,13 @@ userCntl.signup = (req, res) => {
     });
 }
 
-userCntl.editUser = (req, res) => {
-  //update username or password given a username
-}
-
 userCntl.deleteUser = (req, res, next) => {
-  console.log(req.params)
   Users.findOneAndRemove({ username: req.params.username }, (err, res) => {
     next();
   })
 }
 
 userCntl.addExpense = (req, res) => {
-  // req.body.$sort = {amount : -1};
   Users.findOneAndUpdate({ username: req.params.username },
     { $push: { expenses: { $each: [req.body], $sort: { dateTime: -1 } } } },
     { new: true }).select('-password')
@@ -111,16 +105,6 @@ userCntl.addComment = (req, res) => {
       res.send(result);
     });
 }
-
-// userCntl.deleteComment = (req, res) => {
-//   Users.findOneAndUpdate({ username: req.params.username, 'expenses._id': req.params.expId },
-//     { $push: { 'expenses.comments': req.body}},
-//     { new: true }).select('-password')
-//     .exec((err, result) => {
-//       if (err) return res.send(err);
-//       res.send(result);
-//     });
-// }
 
 userCntl.getAllUsers = (req, res) => {
   Users.find({ userType: 'User' }, (err, users) => {

@@ -15,6 +15,8 @@ export const DONE_VIEWING_USER_EXPENSES = 'DONE_VIEWING_USER_EXPENSES';
 export const APPLY_FILTERS = 'APPLY_FILTERS';
 export const HANDLE_FILTER_CHANGE = 'HANDLE_FILTER_CHANGE';
 export const RESET_FILTERS = 'RESET_FILTERS';
+export const VIEW_WEEKLY = 'VIEW_WEEKLY';
+export const VIEW_NORMAL = 'VIEW_NORMAL';
 
 export const toggleLoading = () => {
   return {
@@ -138,5 +140,17 @@ export const applyFilters = filters => {
   return {
     type: APPLY_FILTERS,
     filters
+  }
+}
+
+export const viewWeekly = () => {
+  return {
+    type: VIEW_WEEKLY
+  }
+}
+
+export const viewNormal = () => {
+  return {
+    type: VIEW_NORMAL
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Expense from './Expense';
 import Filters from './Filters';
+import WeeklyHeader from './WeeklyHeader';
 import { Redirect } from 'react-router-dom';
 
 export default class Expenses extends React.PureComponent {
@@ -49,6 +50,7 @@ export default class Expenses extends React.PureComponent {
     return this.props.isEditing ? <Redirect to='/edit_expense' /> : (
       <div>
         <Filters />
+        {this.props.viewingWeekly ? <WeeklyHeader /> : null}
         <div className='expenses'>
           {expensesArr}
         </div>

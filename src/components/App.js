@@ -74,6 +74,7 @@ class App extends React.Component {
                 selectedUser={this.props.selectedUser}
                 adminSetUserExpenses={this.props.adminSetUserExpenses}
                 filters={this.props.filters}
+                viewingWeekly={this.props.viewingWeekly}
               /> :
               <Users
                 usersList={this.props.usersList}
@@ -108,6 +109,7 @@ class App extends React.Component {
             selectedUser={this.props.selectedUser}
             adminSetUserExpenses={this.props.adminSetUserExpenses}
             filters={this.props.filters}
+            viewingWeekly={this.props.viewingWeekly}
           />
         }} />
       </div>
@@ -161,7 +163,8 @@ const mapStateToProps = (state) => {
     isEditing: state.isEditing,
     usersList: state.usersList,
     selectedUser: state.selectedUser,
-    filters: state.filters
+    filters: state.filters,
+    viewingWeekly: state.viewingWeekly
   }
 }
 

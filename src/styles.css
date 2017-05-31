@@ -8,6 +8,7 @@ body {
   margin-right: 50px;
   margin-top: 50px;
   float:right;
+  clear:both;
 }
 
 .users {
@@ -111,3 +112,31 @@ hr {
   clear:both;
 }
 
+.weekly-header {
+  width:500px;
+  height: 100px;
+  float:right;
+  margin-right: 50px;
+}
+.weekly-header h1 {
+  font-size: 20px;
+}
+.weekly-header h2 {
+  display: inline-block;
+}
+
+.inner-header {
+  margin:auto;
+  text-align: center;
+}
+
+.weekly-header .btn {
+  margin-top: 40px;
+}
+#left {
+  float:left;
+}
+
+#right{
+  float:right;
+}

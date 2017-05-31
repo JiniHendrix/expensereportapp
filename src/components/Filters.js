@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { resetFilters, handleFilterChange, applyFilters } from '../actions';
+import { applyFilters, viewWeekly, viewNormal } from '../actions';
 
 class Filters extends React.PureComponent {
 
@@ -59,7 +59,8 @@ class Filters extends React.PureComponent {
           </form>
           <button className='btn' onClick={this.applyFilters}>Apply Filters</button>
           <button className='btn' onClick={this.resetFilters}>Reset Filters</button>
-          <button className='btn'>Get Weekly Stats</button>
+          <button className='btn' onClick={this.props.viewWeekly}>View Weekly</button>
+          <button className='btn' onClick={this.props.viewNormal}>View Normal</button>
         </div>
       </div>
     )
@@ -74,14 +75,14 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    resetFilters: () => {
-      dispatch(resetFilters());
-    },
-    handleChange: (field, e) => {
-      dispatch(handleFilterChange(field, e.target.value));
-    },
     applyFilters: filters => {
       dispatch(applyFilters(filters));
+    },
+    viewWeekly: () => {
+      dispatch(viewWeekly());
+    },
+    viewNormal: () => {
+      dispatch(viewNormal());
     }
   }
 }

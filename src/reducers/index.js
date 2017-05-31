@@ -16,7 +16,9 @@ import {
   DONE_VIEWING_USER_EXPENSES,
   APPLY_FILTERS,
   RESET_FILTERS,
-  HANDLE_FILTER_CHANGE
+  HANDLE_FILTER_CHANGE,
+  VIEW_WEEKLY,
+  VIEW_NORMAL
 } from '../actions';
 
 
@@ -45,7 +47,8 @@ const initialState = {
     userType: 'User',
     _id: ''
   },
-  selectedUser: null
+  selectedUser: null,
+  viewingWeekly: false
 }
 
 
@@ -120,23 +123,14 @@ const reducer = (state = initialState, action) => {
     case DONE_VIEWING_USER_EXPENSES:
       return Object.assign({}, state, { selectedUser: null });
 
-    // case RESET_FILTERS:
-    //   return Object.assign({}, state, {
-    //     filters: {
-    //       from: '',
-    //       to: '',
-    //       min: '',
-    //       max: ''
-    //     }
-    //   });
-
-    // case HANDLE_FILTER_CHANGE:
-    //   const filtersCopy = {filters: {...state.filters}};
-    //   filtersCopy.filters[action.field] = action.value;
-    //   return Object.assign({}, state, filtersCopy);
-
     case APPLY_FILTERS:
       return Object.assign({}, state, {filters: action.filters});
+
+    case VIEW_WEEKLY:
+      return Object.assign({}, state, {viewingWeekly: true});
+
+    case VIEW_NORMAL:
+      return Object.assign({}, state, {viewingWeekly: false})
 
     default: return state;
   }
