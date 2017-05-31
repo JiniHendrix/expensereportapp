@@ -24,8 +24,8 @@ const initialState = {
   filters: {
     from: '',
     to: '',
-    min: null,
-    max: null
+    min: '',
+    max: ''
   },
   isLoading: false,
   isLoggedIn: false,
@@ -124,8 +124,8 @@ const reducer = (state = initialState, action) => {
         filters: {
           from: '',
           to: '',
-          min: null,
-          max: null
+          min: '',
+          max: ''
         }
       });
 

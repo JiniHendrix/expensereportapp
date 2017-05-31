@@ -78,7 +78,6 @@ export const setDefaultExpense = () => {
 }
 
 export const handleExpenseFormChange = (name, value) => {
-  console.log(typeof value)
   return {
     type: HANDLE_EXPENSE_FORM_CHANGE,
     name,
