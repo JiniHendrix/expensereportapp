@@ -5,52 +5,60 @@ import WeeklyHeader from './WeeklyHeader';
 import { Redirect } from 'react-router-dom';
 
 export default class Expenses extends React.PureComponent {
+
+  
   render() {
-    const {filters} = this.props;
+    const {
+      filters,
+      weeklyExpenses,
+      weeklyExpensesIndex,
+      expenses,
+      viewingWeekly,
+      adminSetUserExpenses,
+      setUserDetails,
+      username,
+      selectedUser,
+      isEditing,
+      nextWeek,
+      prevWeek
+    } = this.props;
     const filtering = filters.to || filters.from || filters.min || filters.max;
 
     const from = filters.from || '0000-00-00';
     const to = filters.to || '9999-99-99';
     const min = Number(filters.min) || -Infinity;
     const max = Number(filters.max) || Infinity;
-    
-    const expensesArr = this.props.expenses ? filtering ?
-    this.props.expenses.filter((elem, index) => {
-      const date = elem.dateTime.slice(0, 10);
-      
-      return date >= from && date <= to && elem.amount >= min && elem.amount <= max;
-    }).map((elem, index) => {
-      return <Expense
-        key={index}
-        setUserDetails={this.props.setUserDetails}
-        adminSetUserExpenses={this.props.adminSetUserExpenses}
-        _id={elem._id}
-        username={this.props.username}
-        dateTime={elem.dateTime}
-        amount={elem.amount}
-        description={elem.description}
-        comments={elem.comments}
-        selectedUser={this.props.selectedUser}
-      />
-    }) :  
-    this.props.expenses.map((elem, index) => {
-      return <Expense
-        key={index}
-        setUserDetails={this.props.setUserDetails}
-        adminSetUserExpenses={this.props.adminSetUserExpenses}
-        _id={elem._id}
-        username={this.props.username}
-        dateTime={elem.dateTime}
-        amount={elem.amount}
-        description={elem.description}
-        comments={elem.comments}
-        selectedUser={this.props.selectedUser}
-      />
-    }) : [];
-    return this.props.isEditing ? <Redirect to='/edit_expense' /> : (
+
+    let expenseCopy = expenses.slice();
+
+    if (viewingWeekly) {
+      expenseCopy = weeklyExpenses[weeklyExpensesIndex].expenses;
+    }
+
+    const expensesArr = expenseCopy ? 
+      expenseCopy.filter((elem, index) => {
+        const date = elem.dateTime.slice(0, 10);
+        if (!filtering) return true;
+
+        return date >= from && date <= to && elem.amount >= min && elem.amount <= max;
+      }).map((elem, index) => {
+        return <Expense
+          key={index}
+          setUserDetails={setUserDetails}
+          adminSetUserExpenses={adminSetUserExpenses}
+          _id={elem._id}
+          username={username}
+          dateTime={elem.dateTime}
+          amount={elem.amount}
+          description={elem.description}
+          comments={elem.comments}
+          selectedUser={selectedUser}
+        />
+      }) : [];
+    return isEditing ? <Redirect to='/edit_expense' /> : (
       <div>
         <Filters />
-        {this.props.viewingWeekly ? <WeeklyHeader /> : null}
+        {viewingWeekly ? <WeeklyHeader weeklyExpenses={weeklyExpenses[weeklyExpensesIndex]} nextWeek={nextWeek} prevWeek={prevWeek} /> : null}
         <div className='expenses'>
           {expensesArr}
         </div>

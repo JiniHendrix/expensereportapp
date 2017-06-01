@@ -18,7 +18,9 @@ import {
   setDefaultUserFormValues,
   editingUser,
   adminSetUserExpenses,
-  doneViewingUser
+  doneViewingUser,
+  prevWeek,
+  nextWeek
 } from '../actions';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -75,6 +77,10 @@ class App extends React.Component {
                 adminSetUserExpenses={this.props.adminSetUserExpenses}
                 filters={this.props.filters}
                 viewingWeekly={this.props.viewingWeekly}
+                weeklyExpenses={this.props.weeklyExpenses}
+                weeklyExpensesIndex={this.props.weeklyExpensesIndex}
+                prevWeek={this.props.prevWeek}
+                nextWeek={this.props.nextWeek}
               /> :
               <Users
                 usersList={this.props.usersList}
@@ -110,6 +116,10 @@ class App extends React.Component {
             adminSetUserExpenses={this.props.adminSetUserExpenses}
             filters={this.props.filters}
             viewingWeekly={this.props.viewingWeekly}
+            weeklyExpenses={this.props.weeklyExpenses}
+            weeklyExpensesIndex={this.props.weeklyExpensesIndex}
+            prevWeek={this.props.prevWeek}
+            nextWeek={this.props.nextWeek}
           />
         }} />
       </div>
@@ -151,6 +161,12 @@ const mapDispatchToProps = function (dispatch) {
     },
     doneViewingUser: () => {
       dispatch(doneViewingUser());
+    },
+    prevWeek: () => {
+      dispatch(prevWeek());
+    },
+    nextWeek: () => {
+      dispatch(nextWeek());
     }
   }
 }
@@ -164,7 +180,9 @@ const mapStateToProps = (state) => {
     usersList: state.usersList,
     selectedUser: state.selectedUser,
     filters: state.filters,
-    viewingWeekly: state.viewingWeekly
+    viewingWeekly: state.viewingWeekly,
+    weeklyExpenses: state.weeklyExpenses,
+    weeklyExpensesIndex: state.weeklyExpensesIndex
   }
 }
 

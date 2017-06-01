@@ -18,7 +18,9 @@ import {
   RESET_FILTERS,
   HANDLE_FILTER_CHANGE,
   VIEW_WEEKLY,
-  VIEW_NORMAL
+  VIEW_NORMAL,
+  PREV_WEEK,
+  NEXT_WEEK
 } from '../actions';
 
 
@@ -48,13 +50,17 @@ const initialState = {
     _id: ''
   },
   selectedUser: null,
-  viewingWeekly: false
+  viewingWeekly: false,
+  weeklyExpenses: null,
+  weeklyExpensesIndex: 0
 }
 
 
 
 
 const reducer = (state = initialState, action) => {
+  let newIndex;
+
   switch (action.type) {
     case TOGGLE_LOADING:
       return Object.assign({}, state, { isLoading: !state.isLoading });
@@ -127,10 +133,21 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {filters: action.filters});
 
     case VIEW_WEEKLY:
-      return Object.assign({}, state, {viewingWeekly: true});
+      return Object.assign({}, state, {viewingWeekly: true, weeklyExpenses: action.weeklyExpenses});
 
     case VIEW_NORMAL:
-      return Object.assign({}, state, {viewingWeekly: false})
+      return Object.assign({}, state, {viewingWeekly: false, weeklyExpenses: null});
+
+    case PREV_WEEK:
+      newIndex = state.weeklyExpensesIndex === 0 ? 0 : state.weeklyExpensesIndex - 1;
+      console.log(newIndex)
+      return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
+
+    case NEXT_WEEK:
+      const weeklyExpensesLength = state.weeklyExpenses[state.weeklyExpensesIndex].length;
+      newIndex = state.weeklyExpensesIndex === (weeklyExpensesLength - 1) ? state.weeklyExpensesIndex : state.weeklyExpensesIndex + 1; 
+      console.log(newIndex)
+      return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
 
     default: return state;
   }

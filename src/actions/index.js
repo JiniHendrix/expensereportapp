@@ -17,6 +17,8 @@ export const HANDLE_FILTER_CHANGE = 'HANDLE_FILTER_CHANGE';
 export const RESET_FILTERS = 'RESET_FILTERS';
 export const VIEW_WEEKLY = 'VIEW_WEEKLY';
 export const VIEW_NORMAL = 'VIEW_NORMAL';
+export const PREV_WEEK = 'PREV_WEEK';
+export const NEXT_WEEK = 'NEXT_WEEK';
 
 export const toggleLoading = () => {
   return {
@@ -143,14 +145,27 @@ export const applyFilters = filters => {
   }
 }
 
-export const viewWeekly = () => {
+export const viewWeekly = (weeklyExpenses) => {
   return {
-    type: VIEW_WEEKLY
+    type: VIEW_WEEKLY,
+    weeklyExpenses
   }
 }
 
 export const viewNormal = () => {
   return {
     type: VIEW_NORMAL
+  }
+}
+
+export const prevWeek = () => {
+  return {
+    type: PREV_WEEK
+  }
+}
+
+export const nextWeek = () => {
+  return {
+    type: NEXT_WEEK
   }
 }
