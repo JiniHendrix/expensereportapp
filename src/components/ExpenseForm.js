@@ -4,7 +4,8 @@ import {
   setUserDetails,
   handleExpenseFormChange,
   setDefaultExpense,
-  adminSetUserExpenses
+  adminSetUserExpenses,
+  viewWeekly
 } from '../actions';
 import { connect } from 'react-redux';
 import {Redirect} from 'react-router-dom';
@@ -29,7 +30,8 @@ class ExpenseForm extends React.PureComponent {
         description,
         _id
       },
-      adminSetUserExpenses
+      adminSetUserExpenses,
+      viewWeekly
     } = this.props;
     const username = selectedUser ? selectedUser.username : userDetails.username;
 
@@ -57,6 +59,7 @@ class ExpenseForm extends React.PureComponent {
           //ternary here for admin vs user
           selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
+          viewWeekly();
         })
     }
 
@@ -78,6 +81,7 @@ class ExpenseForm extends React.PureComponent {
         .then(res => {
           selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
+          viewWeekly();
         })
     }
     setDefaultExpense();
@@ -140,6 +144,9 @@ const mapDispatchToProps = function (dispatch) {
     },
     adminSetUserExpenses: (userDetails) => {
       dispatch(adminSetUserExpenses(userDetails))
+    },
+    viewWeekly: () => {
+      dispatch(viewWeekly());
     }
   }
 }

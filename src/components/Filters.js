@@ -8,49 +8,6 @@ class Filters extends React.PureComponent {
     super();
     this.applyFilters = this.applyFilters.bind(this);
     this.resetFilters = this.resetFilters.bind(this);
-    this.viewWeekly = this.viewWeekly.bind(this);
-  }
-
-  getWeekEnds(date) {
-    const dateObj = new Date(date);
-    const ONEDAY = 1000 * 60 * 60 * 24;
-
-    const sunday = new Date(dateObj.getTime() - dateObj.getDay() * ONEDAY);
-    const saturday = new Date(dateObj.getTime() + ((6 - dateObj.getDay()) * ONEDAY));
-
-    return { sunday, saturday };
-  }
-
-  viewWeekly() {
-    const weeklyExpenses = [];
-
-    function Week({sunday, saturday}, expense) {
-      this.total = expense.amount;
-      this.average = 0;
-      this.count = 1;
-      this.sundayDate = sunday;
-      this.saturdayDate = saturday;
-      this.expenses = [expense];
-    }
-    const expenses = this.props.selectedUser ? this.props.selectedUser.expenses : this.props.userDetails.expenses;
-
-    let currWeek = new Week(this.getWeekEnds(expenses[0].dateTime), expenses[0]);
-
-    for (let i = 1; i < expenses.length; i++) {
-      if (expenses[i].dateTime.slice(0, 10) > currWeek.saturdayDate.toISOString().slice(0, 10) || expenses[i].dateTime.slice(0, 10) < currWeek.sundayDate.toISOString().slice(0, 10)) {
-        currWeek.average = currWeek.total / currWeek.count;
-        weeklyExpenses.push(currWeek);
-        currWeek = new Week(this.getWeekEnds(expenses[i].dateTime), expenses[i]);
-      } else {
-        currWeek.total += expenses[i].amount;
-        currWeek.count++;
-        currWeek.expenses.push(expenses[i]);
-      }
-    }
-    currWeek.average = currWeek.total / currWeek.count;
-    weeklyExpenses.push(currWeek);
-
-    this.props.viewWeekly(weeklyExpenses);
   }
 
   applyFilters() {
@@ -102,7 +59,7 @@ class Filters extends React.PureComponent {
           </form>
           <button className='btn' onClick={this.applyFilters}>Apply Filters</button>
           <button className='btn' onClick={this.resetFilters}>Reset Filters</button>
-          <button className='btn' onClick={this.viewWeekly}>View Weekly</button>
+          <button className='btn' onClick={this.props.viewWeekly}>View Weekly</button>
           <button className='btn' onClick={this.props.viewNormal}>View Normal</button>
         </div>
       </div>

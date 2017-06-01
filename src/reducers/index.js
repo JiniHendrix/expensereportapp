@@ -130,25 +130,63 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, { selectedUser: null });
 
     case APPLY_FILTERS:
-      return Object.assign({}, state, {filters: action.filters});
+      return Object.assign({}, state, { filters: action.filters });
 
     case VIEW_WEEKLY:
-      return Object.assign({}, state, {viewingWeekly: true, weeklyExpenses: action.weeklyExpenses, weeklyExpensesIndex: 0});
+      const weeklyExpenses = [];
+
+      function Week({sunday, saturday}, expense) {
+        this.total = expense.amount;
+        this.average = 0;
+        this.count = 1;
+        this.sundayDate = sunday;
+        this.saturdayDate = saturday;
+        this.expenses = [expense];
+      }
+      const expenses = state.selectedUser ? state.selectedUser.expenses : state.userDetails.expenses;
+
+      let currWeek = new Week(getWeekEnds(expenses[0].dateTime), expenses[0]);
+
+      for (let i = 1; i < expenses.length; i++) {
+        if (expenses[i].dateTime.slice(0, 10) > currWeek.saturdayDate.toISOString().slice(0, 10) || expenses[i].dateTime.slice(0, 10) < currWeek.sundayDate.toISOString().slice(0, 10)) {
+          currWeek.average = currWeek.total / currWeek.count;
+          weeklyExpenses.push(currWeek);
+          currWeek = new Week(getWeekEnds(expenses[i].dateTime), expenses[i]);
+        } else {
+          currWeek.total += expenses[i].amount;
+          currWeek.count++;
+          currWeek.expenses.push(expenses[i]);
+        }
+      }
+      currWeek.average = currWeek.total / currWeek.count;
+      weeklyExpenses.push(currWeek);
+
+      return Object.assign({}, state, { viewingWeekly: true, weeklyExpenses: weeklyExpenses });
 
     case VIEW_NORMAL:
-      return Object.assign({}, state, {viewingWeekly: false, weeklyExpenses: null});
+      return Object.assign({}, state, { viewingWeekly: false, weeklyExpenses: null, weeklyExpensesIndex: 0 });
 
     case PREV_WEEK:
       newIndex = state.weeklyExpensesIndex === 0 ? 0 : state.weeklyExpensesIndex - 1;
-      return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
+      return Object.assign({}, state, { weeklyExpensesIndex: newIndex });
 
     case NEXT_WEEK:
       const weeklyExpensesLength = state.weeklyExpenses.length;
-      newIndex = state.weeklyExpensesIndex === (weeklyExpensesLength - 1) ? state.weeklyExpensesIndex : state.weeklyExpensesIndex + 1; 
-      return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
+      newIndex = state.weeklyExpensesIndex === (weeklyExpensesLength - 1) ? state.weeklyExpensesIndex : state.weeklyExpensesIndex + 1;
+      return Object.assign({}, state, { weeklyExpensesIndex: newIndex });
 
     default: return state;
   }
 }
 
 export default reducer;
+
+function getWeekEnds(date) {
+  const dateObj = new Date(date);
+  const ONEDAY = 1000 * 60 * 60 * 24;
+
+  const sunday = new Date(dateObj.getTime() - dateObj.getDay() * ONEDAY);
+  const saturday = new Date(dateObj.getTime() + ((6 - dateObj.getDay()) * ONEDAY));
+
+  return { sunday, saturday };
+}

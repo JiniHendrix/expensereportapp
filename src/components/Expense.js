@@ -30,10 +30,11 @@ class Expense extends React.PureComponent {
 
   responseHandler(fetchPromise) {
     fetchPromise.then(res => {
-        return res.json();
-      })
+      return res.json();
+    })
       .then(res => {
         this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
+        this.props.viewWeekly();
       })
   }
 
@@ -49,11 +50,11 @@ class Expense extends React.PureComponent {
     const comment = document.getElementById(this.props._id).value;
 
     const fetchPromise = fetch(`/user/${this.props.username}/expenses/${this.props._id}`, {
-      method:'POST',
+      method: 'POST',
       body: JSON.stringify({
         comment
       }),
-      headers:{
+      headers: {
         'Content-Type': 'application/json'
       }
     });
@@ -116,6 +117,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ContainerExpense = connect(() => {return {}}, mapDispatchToProps)(Expense);
+const ContainerExpense = connect(() => { return {} }, mapDispatchToProps)(Expense);
 
 export default ContainerExpense;

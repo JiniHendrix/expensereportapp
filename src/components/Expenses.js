@@ -20,7 +20,8 @@ export default class Expenses extends React.PureComponent {
       selectedUser,
       isEditing,
       nextWeek,
-      prevWeek
+      prevWeek,
+      viewWeekly
     } = this.props;
     const filtering = filters.to || filters.from || filters.min || filters.max;
 
@@ -53,6 +54,7 @@ export default class Expenses extends React.PureComponent {
           description={elem.description}
           comments={elem.comments}
           selectedUser={selectedUser}
+          viewWeekly={viewWeekly}
         />
       }) : [];
     return isEditing ? <Redirect to='/edit_expense' /> : (

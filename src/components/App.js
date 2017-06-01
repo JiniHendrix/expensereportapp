@@ -21,7 +21,8 @@ import {
   doneViewingUser,
   prevWeek,
   nextWeek,
-  viewNormal
+  viewNormal,
+  viewWeekly
 } from '../actions';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -83,6 +84,7 @@ class App extends React.Component {
                 weeklyExpensesIndex={this.props.weeklyExpensesIndex}
                 prevWeek={this.props.prevWeek}
                 nextWeek={this.props.nextWeek}
+                viewWeekly={this.props.viewWeekly}
               /> :
               <Users
                 usersList={this.props.usersList}
@@ -95,7 +97,7 @@ class App extends React.Component {
               />
         }} />
         <Route path='/new_expense' render={() => { return this.props.isLoggedIn ? <ExpenseForm type='new' /> : <Redirect to='/' /> }} />
-        <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit' /> }} />
+        <Route path='/edit_expense' render={() => { return <ExpenseForm type='edit'/> }} />
         <Route path='/add_user' render={() => {
           return <UserForm
             isEditing={this.props.isEditing}
@@ -122,6 +124,7 @@ class App extends React.Component {
             weeklyExpensesIndex={this.props.weeklyExpensesIndex}
             prevWeek={this.props.prevWeek}
             nextWeek={this.props.nextWeek}
+            viewWeekly={this.props.viewWeekly}
           />
         }} />
       </div>
@@ -172,6 +175,9 @@ const mapDispatchToProps = function (dispatch) {
     },
     viewNormal: () => {
       dispatch(viewNormal());
+    },
+    viewWeekly: () => {
+      dispatch(viewWeekly());
     }
   }
 }
