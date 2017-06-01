@@ -20,7 +20,8 @@ import {
   adminSetUserExpenses,
   doneViewingUser,
   prevWeek,
-  nextWeek
+  nextWeek,
+  viewNormal
 } from '../actions';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
@@ -54,6 +55,7 @@ class App extends React.Component {
           setDefaultExpense={this.props.setDefaultExpense}
           selectedUser={this.props.selectedUser}
           doneViewingUser={this.props.doneViewingUser}
+          viewNormal={this.props.viewNormal}
         />
         <Route exact path='/' component={() => {
           return <Login
@@ -167,6 +169,9 @@ const mapDispatchToProps = function (dispatch) {
     },
     nextWeek: () => {
       dispatch(nextWeek());
+    },
+    viewNormal: () => {
+      dispatch(viewNormal());
     }
   }
 }

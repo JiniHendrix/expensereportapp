@@ -2,6 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default class Nav extends React.PureComponent {
+  constructor() {
+    super();
+    this.doneViewingUser = this.doneViewingUser.bind(this);
+  }
+  doneViewingUser() {
+    this.props.doneViewingUser();
+    this.props.viewNormal();
+  }
   render() {
     if (!this.props.isLoggedIn) return null;
 
@@ -36,7 +44,7 @@ export default class Nav extends React.PureComponent {
       nav = (
         <ul className='nav navbar-nav'>
           <li>
-            <Link to='/home' onClick={this.props.doneViewingUser}>Home</Link>
+            <Link to='/home' onClick={this.doneViewingUser}>Home</Link>
           </li>
           <li>
             <Link to='/view_user' onClick={this.props.setDefaultExpense}>{this.props.selectedUser.username}</Link>
