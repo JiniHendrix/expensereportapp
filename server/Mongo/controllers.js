@@ -106,6 +106,24 @@ userCntl.addComment = (req, res) => {
     });
 }
 
+userCntl.deleteComment = (req, res) => {
+  Users.findOneAndUpdate({
+    username: req.params.username,
+    'expenses._id': req.params.expId,
+  },
+    {
+      $pull: {
+        'expenses.$.comments': {
+          _id: req.params.commentId
+        }
+      }
+    }, { new: true },
+    (err, result) => {
+      if (err) return res.send(err);
+      res.send(result);
+    })
+}
+
 userCntl.getAllUsers = (req, res) => {
   Users.find({ userType: 'User' }, (err, users) => {
     if (err) res.send(err);

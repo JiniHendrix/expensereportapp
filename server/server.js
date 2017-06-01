@@ -19,6 +19,8 @@ app.post('/user/:username/expenses', userCntl.addExpense);
 app.patch('/user/:username/expenses/:expId', userCntl.updateExpense);
 app.post('/user/:username/expenses/:expId', userCntl.addComment);
 app.delete('/user/:username/expenses/:expId', userCntl.deleteExpense);
+app.delete('/user/:username/expenses/:expId/:commentId', userCntl.deleteComment);
+
 
 app.get('/usermanager', userCntl.getAllUsers);
 app.post('/usermanager', userCntl.addUser, userCntl.getAllUsers);

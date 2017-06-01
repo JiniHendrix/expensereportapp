@@ -8,6 +8,7 @@ class Expense extends React.PureComponent {
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
     this.comment = this.comment.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
 
   edit() {
@@ -57,10 +58,23 @@ class Expense extends React.PureComponent {
         return res.json();
       })
       .then(res => {
-        console.log(this.props.selectedUser);
         this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
       });
     document.getElementById(this.props._id).value = '';
+  }
+
+  deleteComment(id, e) {
+    e.preventDefault;
+
+    fetch(`/user/${this.props.username}/expenses/${this.props._id}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
+      })
   }
   render() {
     const {
@@ -71,7 +85,7 @@ class Expense extends React.PureComponent {
     } = this.props;
 
     const commArr = comments.map((elem, i) => {
-      return <li key={i}>{elem.comment}</li>
+      return <li key={i}>{elem.comment} <button onClick={this.deleteComment.bind(null, elem._id)} className='btn'>X</button></li>
     });
 
     const dateInst = new Date(dateTime);
