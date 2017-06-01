@@ -34,7 +34,7 @@ class Expense extends React.PureComponent {
     })
       .then(res => {
         this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
-        this.props.viewWeekly();
+        if (this.props.viewingWeekly) this.props.viewWeekly();
       })
   }
 

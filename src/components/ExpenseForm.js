@@ -23,6 +23,7 @@ class ExpenseForm extends React.PureComponent {
       setDefaultExpense,
       selectedUser,
       userDetails,
+      viewingWeekly,
       expenseFormValues: {
         date,
         time,
@@ -59,7 +60,7 @@ class ExpenseForm extends React.PureComponent {
           //ternary here for admin vs user
           selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
-          viewWeekly();
+          if (this.props.viewingWeekly) viewWeekly();
         })
     }
 
@@ -81,7 +82,7 @@ class ExpenseForm extends React.PureComponent {
         .then(res => {
           selectedUser ? adminSetUserExpenses(res) : setUserDetails(res);
           toggleLoading();
-          viewWeekly();
+          if (this.props.viewingWeekly) viewWeekly();
         })
     }
     setDefaultExpense();
@@ -156,7 +157,8 @@ const mapStateToProps = (state) => {
     expenseFormValues: state.expenseFormValues,
     userDetails: state.userDetails,
     isEditing: state.isEditing,
-    selectedUser: state.selectedUser
+    selectedUser: state.selectedUser,
+    viewingWeekly: state.viewingWeekly
   }
 }
 

@@ -55,6 +55,7 @@ export default class Expenses extends React.PureComponent {
           comments={elem.comments}
           selectedUser={selectedUser}
           viewWeekly={viewWeekly}
+          viewingWeekly={viewingWeekly}
         />
       }) : [];
     return isEditing ? <Redirect to='/edit_expense' /> : (
