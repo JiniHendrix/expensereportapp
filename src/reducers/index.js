@@ -143,7 +143,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
 
     case NEXT_WEEK:
-      const weeklyExpensesLength = state.weeklyExpenses[state.weeklyExpensesIndex].length;
+      const weeklyExpensesLength = state.weeklyExpenses.length;
       newIndex = state.weeklyExpensesIndex === (weeklyExpensesLength - 1) ? state.weeklyExpensesIndex : state.weeklyExpensesIndex + 1; 
       return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
 
