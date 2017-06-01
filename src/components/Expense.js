@@ -11,38 +11,6 @@ class Expense extends React.PureComponent {
     this.deleteComment = this.deleteComment.bind(this);
   }
 
-  viewWeekly() {
-    const weeklyExpenses = [];
-
-    function Week({sunday, saturday}, expense) {
-      this.total = expense.amount;
-      this.average = 0;
-      this.count = 1;
-      this.sundayDate = sunday;
-      this.saturdayDate = saturday;
-      this.expenses = [expense];
-    }
-    const expenses = this.props.selectedUser ? this.props.selectedUser.expenses : this.props.userDetails.expenses;
-
-    let currWeek = new Week(this.getWeekEnds(expenses[0].dateTime), expenses[0]);
-
-    for (let i = 1; i < expenses.length; i++) {
-      if (expenses[i].dateTime.slice(0, 10) > currWeek.saturdayDate.toISOString().slice(0, 10) || expenses[i].dateTime.slice(0, 10) < currWeek.sundayDate.toISOString().slice(0, 10)) {
-        currWeek.average = currWeek.total / currWeek.count;
-        weeklyExpenses.push(currWeek);
-        currWeek = new Week(this.getWeekEnds(expenses[i].dateTime), expenses[i]);
-      } else {
-        currWeek.total += expenses[i].amount;
-        currWeek.count++;
-        currWeek.expenses.push(expenses[i]);
-      }
-    }
-    currWeek.average = currWeek.total / currWeek.count;
-    weeklyExpenses.push(currWeek);
-
-    this.props.viewWeekly(weeklyExpenses);
-  }
-
   edit() {
     const {
       _id,
@@ -62,8 +30,8 @@ class Expense extends React.PureComponent {
 
   responseHandler(fetchPromise) {
     fetchPromise.then(res => {
-      return res.json();
-    })
+        return res.json();
+      })
       .then(res => {
         this.props.selectedUser ? this.props.adminSetUserExpenses(res) : this.props.setUserDetails(res);
       })
@@ -81,11 +49,11 @@ class Expense extends React.PureComponent {
     const comment = document.getElementById(this.props._id).value;
 
     const fetchPromise = fetch(`/user/${this.props.username}/expenses/${this.props._id}`, {
-      method: 'POST',
+      method:'POST',
       body: JSON.stringify({
         comment
       }),
-      headers: {
+      headers:{
         'Content-Type': 'application/json'
       }
     });
@@ -148,6 +116,6 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-const ContainerExpense = connect(() => { return {} }, mapDispatchToProps)(Expense);
+const ContainerExpense = connect(() => {return {}}, mapDispatchToProps)(Expense);
 
 export default ContainerExpense;
