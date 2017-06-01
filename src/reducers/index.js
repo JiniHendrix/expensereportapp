@@ -133,20 +133,18 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {filters: action.filters});
 
     case VIEW_WEEKLY:
-      return Object.assign({}, state, {viewingWeekly: true, weeklyExpenses: action.weeklyExpenses});
+      return Object.assign({}, state, {viewingWeekly: true, weeklyExpenses: action.weeklyExpenses, weeklyExpensesIndex: 0});
 
     case VIEW_NORMAL:
       return Object.assign({}, state, {viewingWeekly: false, weeklyExpenses: null});
 
     case PREV_WEEK:
       newIndex = state.weeklyExpensesIndex === 0 ? 0 : state.weeklyExpensesIndex - 1;
-      console.log(newIndex)
       return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
 
     case NEXT_WEEK:
       const weeklyExpensesLength = state.weeklyExpenses[state.weeklyExpensesIndex].length;
       newIndex = state.weeklyExpensesIndex === (weeklyExpensesLength - 1) ? state.weeklyExpensesIndex : state.weeklyExpensesIndex + 1; 
-      console.log(newIndex)
       return Object.assign({}, state, {weeklyExpensesIndex: newIndex});
 
     default: return state;

@@ -20,8 +20,8 @@ export default class WeeklyHeader extends React.PureComponent {
         <button id='right' className='btn' onClick={nextWeek}>{'>'}</button>
         <div className='inner-header'>
           <h1>Week {saturdayDate.toLocaleDateString()} to {sundayDate.toLocaleDateString()}</h1>
-          <h2 className='weekly-stats'>Total: ${total}</h2>
-          <h2 className='weekly-stats'> Average: ${average}</h2>
+          <h2 className='weekly-stats'>Total: ${total.toLocaleString({currency: 'USD'})}</h2>
+          <h2 className='weekly-stats'> Average: ${average.toLocaleString({currency: 'USD'})}</h2>
         </div>
       </div>
     )
