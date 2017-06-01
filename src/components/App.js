@@ -45,23 +45,6 @@ class App extends React.Component {
   }
 
   render() {
-
-    const expensesCmpnt = [
-      <Expenses
-        isEditing={this.props.isEditing}
-        expenses={this.props.userDetails.expenses}
-        username={this.props.userDetails.username}
-        setUserDetails={this.props.setUserDetails}
-        selectedUser={this.props.selectedUser}
-        adminSetUserExpenses={this.props.adminSetUserExpenses}
-        filters={this.props.filters}
-        viewingWeekly={this.props.viewingWeekly}
-        weeklyExpenses={this.props.weeklyExpenses}
-        weeklyExpensesIndex={this.props.weeklyExpensesIndex}
-        prevWeek={this.props.prevWeek}
-        nextWeek={this.props.nextWeek}
-      />
-    ];
     return (
       <div>
         <Nav
@@ -85,7 +68,20 @@ class App extends React.Component {
         <Route path='/home' render={() => {
           return !this.props.isLoggedIn ? <Redirect to='/' /> :
             this.props.userDetails.userType === 'User' ?
-              expensesCmpnt :
+              <Expenses
+                isEditing={this.props.isEditing}
+                expenses={this.props.userDetails.expenses}
+                username={this.props.userDetails.username}
+                setUserDetails={this.props.setUserDetails}
+                selectedUser={this.props.selectedUser}
+                adminSetUserExpenses={this.props.adminSetUserExpenses}
+                filters={this.props.filters}
+                viewingWeekly={this.props.viewingWeekly}
+                weeklyExpenses={this.props.weeklyExpenses}
+                weeklyExpensesIndex={this.props.weeklyExpensesIndex}
+                prevWeek={this.props.prevWeek}
+                nextWeek={this.props.nextWeek}
+              /> :
               <Users
                 usersList={this.props.usersList}
                 editingUser={this.props.editingUser}
